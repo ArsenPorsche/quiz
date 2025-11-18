@@ -5,31 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/KeyGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/JwtConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/auth/AuthResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/auth/LoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/auth/RegisterRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/security/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/AdminQuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/CategoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/CategoryDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/CategoryRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/QuestionRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/QuestionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/util/CsvUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/security/JwtUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuestionController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizRequest$UserAnswer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizResult.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Question.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Question.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuestionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuestionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/service/QuestionService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/org/example/quiz/QuizApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +85,26 @@
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="QuizApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.quiz.QuizApplication" />
+      <module name="quiz" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.quiz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.QuizApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -107,5 +121,16 @@
       <updated>1763479067822</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -25,8 +25,11 @@ public class JwtUtil {
     public String generateToken(UserDetails userDetails) {
         Instant now = Instant.now();
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", userDetails.getAuthorities().iterator().next().getAuthority());
-
+        String authority = userDetails.getAuthorities().iterator().next().getAuthority();
+        if (authority != null && authority.startsWith("ROLE_")) {
+            authority = authority.substring("ROLE_".length());
+        }
+        claims.put("role", authority);
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
                 .issuer("quiz-app")
                 .issuedAt(now)
