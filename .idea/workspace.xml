@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="add random question queries to QuestionRepository">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +127,7 @@
       <updated>1763479067822</updated>
       <workItem from="1763497221586" duration="1167000" />
       <workItem from="1763498397444" duration="799000" />
-      <workItem from="1763547523457" duration="630000" />
+      <workItem from="1763547523457" duration="1918000" />
     </task>
     <task id="LOCAL-00001" summary="create feature branch for quiz &amp; leaderboard">
       <option name="closed" value="true" />
@@ -154,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763547537361</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add random question queries to QuestionRepository">
+      <option name="closed" value="true" />
+      <created>1763548710093</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763548710093</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
