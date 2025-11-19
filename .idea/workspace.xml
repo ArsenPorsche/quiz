@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="implement POST /api/quiz/start">
+    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="implement POST /api/quiz/submit with scoring and result saving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/KeyGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/KeyGenerator.class" afterDir="false" />
@@ -25,7 +26,6 @@
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest$UserAnswer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest$UserAnswer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/AuthResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/AuthResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/LoginRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/RegisterRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Category$CategoryBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Category$CategoryBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Question$QuestionBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Question$QuestionBuilder.class" afterDir="false" />
@@ -155,7 +155,7 @@
       <updated>1763479067822</updated>
       <workItem from="1763497221586" duration="1167000" />
       <workItem from="1763498397444" duration="799000" />
-      <workItem from="1763547523457" duration="2926000" />
+      <workItem from="1763547523457" duration="5102000" />
     </task>
     <task id="LOCAL-00001" summary="create feature branch for quiz &amp; leaderboard">
       <option name="closed" value="true" />
@@ -197,7 +197,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763549743713</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="implement POST /api/quiz/submit with scoring and result saving">
+      <option name="closed" value="true" />
+      <created>1763550666447</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1763550666447</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,7 +227,8 @@
     <MESSAGE value="create feature branch for quiz &amp; leaderboard" />
     <MESSAGE value="add random question queries to QuestionRepository" />
     <MESSAGE value="implement POST /api/quiz/start" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement POST /api/quiz/start" />
+    <MESSAGE value="implement POST /api/quiz/submit with scoring and result saving" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement POST /api/quiz/submit with scoring and result saving" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -11,9 +11,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     long countByCategoryId(Long categoryId);
 
-    @Query(value = "SELECT * FROM question WHERE category_id = :categoryId ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
+    @Query(value = "SELECT * FROM questions WHERE category_id = :categoryId ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
     List<Question> findRandomByCategoryId(@Param("categoryId") Long categoryId, @Param("limit") int limit);
 
-    @Query(value = "SELECT * FROM question ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
+    @Query(value = "SELECT * FROM questions ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
     List<Question> findRandom(@Param("limit") int limit);
 }
