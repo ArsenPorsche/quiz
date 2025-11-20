@@ -54,7 +54,7 @@ public class SeedConfig implements CommandLineRunner {
                     .optionB("Paris")
                     .optionC("Berlin")
                     .optionD("Madrid")
-                    .correctAnswer('B')
+                    .correctAnswer("B")
                     .category(general)
                     .build();
 
@@ -64,7 +64,7 @@ public class SeedConfig implements CommandLineRunner {
                     .optionB("Programming")
                     .optionC("Driving")
                     .optionD("Painting")
-                    .correctAnswer('B')
+                    .correctAnswer("B")
                     .category(tech)
                     .build();
 
@@ -74,7 +74,7 @@ public class SeedConfig implements CommandLineRunner {
                     .optionB("William Shakespeare")
                     .optionC("Jane Austen")
                     .optionD("Mark Twain")
-                    .correctAnswer('B')
+                    .correctAnswer("B")
                     .category(general)
                     .build();
 

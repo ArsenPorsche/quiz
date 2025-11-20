@@ -32,7 +32,7 @@ public class Question {
     private String optionD;
 
     @Column(nullable = false, length = 1)
-    private char correctAnswer;
+    private String correctAnswer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)

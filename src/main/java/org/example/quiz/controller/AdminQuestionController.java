@@ -37,7 +37,7 @@ public class AdminQuestionController {
                 .optionB(request.optionB())
                 .optionC(request.optionC())
                 .optionD(request.optionD())
-                .correctAnswer(request.correctAnswer().charAt(0))
+                .correctAnswer(request.correctAnswer())
                 .category(category)
                 .build();
 
@@ -78,7 +78,7 @@ public class AdminQuestionController {
             q.setOptionB(request.optionB());
             q.setOptionC(request.optionC());
             q.setOptionD(request.optionD());
-            q.setCorrectAnswer(request.correctAnswer().charAt(0));
+            q.setCorrectAnswer(request.correctAnswer());
             q.setCategory(category);
             Question updated = questionRepository.save(q);
             QuestionResponse resp = new QuestionResponse(
