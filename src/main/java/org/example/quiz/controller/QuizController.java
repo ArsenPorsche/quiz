@@ -11,18 +11,14 @@ import org.example.quiz.repository.QuizResultRepository;
 import org.example.quiz.repository.UserRepository;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,7 +30,6 @@ public class QuizController {
     private final QuestionRepository questionRepository;
     private final QuizResultRepository quizResultRepository;
     private final UserRepository userRepository;
-
 
     @PostMapping("/start")
     public List<QuizQuestionDto> startQuiz(@RequestBody StartQuizRequest request) {
@@ -62,34 +57,18 @@ public class QuizController {
                                     Authentication authentication) {
 
         var userAnswers = request.answers();
+        if (userAnswers.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No answers provided");
+        }
 
-        Set<Long> questionIds = userAnswers.stream()
-                .map(UserAnswer::questionId)
-                .collect(Collectors.toSet());
-
-        Map<Long, Question> questionMap = questionRepository.findAllById(questionIds)
-                .stream()
-                .collect(Collectors.toMap(Question::getId, q -> q));
+        var questionMap = questionRepository.findAllById(
+                userAnswers.stream().map(UserAnswer::questionId).toList()
+        ).stream().collect(Collectors.toMap(Question::getId, q -> q));
 
         int correct = 0;
-        Question firstQuestion = userAnswers.isEmpty() ? null : questionMap.get(userAnswers.get(0).questionId());
-        String categoryName = firstQuestion != null && firstQuestion.getCategory() != null
-                ? firstQuestion.getCategory().getName()
-                : null;
-
         for (UserAnswer ua : userAnswers) {
             Question q = questionMap.get(ua.questionId());
-            if (q == null) continue;
-
-//            String correctAnswerText = switch (q.getCorrectAnswer()) {
-//                case 'A' -> q.getOptionA();
-//                case 'B' -> q.getOptionB();
-//                case 'C' -> q.getOptionC();
-//                case 'D' -> q.getOptionD();
-//                default -> null;
-//            };
-
-            if ( q.getCorrectAnswer().equals(ua.selectedAnswer())) {
+            if (q != null && q.getCorrectAnswer().equals(ua.selectedAnswer())) {
                 correct++;
             }
         }
@@ -97,21 +76,22 @@ public class QuizController {
         int total = userAnswers.size();
         int scorePercent = total > 0 ? (correct * 100) / total : 0;
 
-        String username = authentication == null ? null : authentication.getName();
-
-//        Optional<User> userOpt = userRepository.findByUsername(username);
-//
-//        User user = userOpt.get();
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Long categoryId = (firstQuestion != null && firstQuestion.getCategory() != null)
-                ? firstQuestion.getCategory().getId()
-                : null;
+        boolean isRandomQuiz = request.categoryId() == null;
+        Long categoryId = isRandomQuiz ? null : request.categoryId();
+        String categoryName = isRandomQuiz ? "Random Quiz" : null;
+
+        if (!isRandomQuiz) {
+            Question anyQuestion = questionMap.values().stream().findFirst().orElse(null);
+            if (anyQuestion != null && anyQuestion.getCategory() != null) {
+                categoryName = anyQuestion.getCategory().getName();
+            }
+        }
 
         QuizResult result = QuizResult.builder()
                 .user(user)
-//                .categoryId(firstQuestion != null ? firstQuestion.getCategory().getId() : null)
                 .categoryId(categoryId)
                 .categoryName(categoryName)
                 .correctAnswers(correct)
@@ -127,9 +107,12 @@ public class QuizController {
                 correct,
                 scorePercent,
                 "Quiz completed successfully!",
-                result.getId()
+                result.getId(),
+                categoryName,
+                result.getFinishedAt()
         );
     }
+
     @GetMapping("/results")
     public Page<QuizResultDto> getMyResults(
             @RequestParam(defaultValue = "0") int page,
@@ -137,12 +120,10 @@ public class QuizController {
             @RequestParam(required = false) Long categoryId,
             Authentication auth) {
 
-        String username = auth.getName();
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(auth.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("finishedAt").descending());
-
         Page<QuizResult> results = categoryId == null
                 ? quizResultRepository.findByUser(user, pageable)
                 : quizResultRepository.findByUserAndCategoryId(user, categoryId, pageable);
@@ -151,33 +132,46 @@ public class QuizController {
                 r.getTotalQuestions(),
                 r.getCorrectAnswers(),
                 r.getScorePercent(),
-                "Success",
-                r.getId()
+                "",
+                r.getId(),
+                r.getCategoryName() != null ? r.getCategoryName() : "Random Quiz",
+                r.getFinishedAt()
         ));
     }
 
     @GetMapping("/results/{id}")
     public QuizResultDto getResult(@PathVariable Long id, Authentication auth) {
-        String username = auth.getName();
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(auth.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         QuizResult result = quizResultRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Result not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         return new QuizResultDto(
                 result.getTotalQuestions(),
                 result.getCorrectAnswers(),
                 result.getScorePercent(),
-                "Success",
-                result.getId()
+                "",
+                result.getId(),
+                result.getCategoryName() != null ? result.getCategoryName() : "Random Quiz",
+                result.getFinishedAt()
         );
     }
 
     @GetMapping("/leaderboard/global")
     public List<LeaderboardEntry> getGlobalLeaderboard(@RequestParam(defaultValue = "20") int size) {
-        Pageable pageable = PageRequest.of(0, size);
-        return quizResultRepository.findGlobalLeaderboardNative(pageable)
+        return quizResultRepository.findGlobalLeaderboardNative(PageRequest.of(0, size))
+                .getContent()
+                .stream()
+                .map(this::toLeaderboardEntry)
+                .toList();
+    }
+
+    @GetMapping("/leaderboard/category/{categoryId}")
+    public List<LeaderboardEntry> getCategoryLeaderboard(
+            @PathVariable Long categoryId,
+            @RequestParam(defaultValue = "20") int size) {
+        return quizResultRepository.findCategoryLeaderboardNative(categoryId, PageRequest.of(0, size))
                 .getContent()
                 .stream()
                 .map(this::toLeaderboardEntry)
@@ -189,41 +183,37 @@ public class QuizController {
         User user = userRepository.findByUsername(auth.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Optional<Object[]> best = quizResultRepository.findMyBestResultNative(user.getId());
+        Long rank = quizResultRepository.findMyGlobalRank(user.getId());
+        var best = quizResultRepository.findMyBestResultNative(user.getId());
 
         if (best.isEmpty()) {
-            return Map.of("message", "No results yet");
+            return Map.of("message", "No results yet", "rank", null);
         }
 
         LeaderboardEntry entry = toLeaderboardEntry(best.get());
-        return Map.of("rank", entry.rank(), "bestResult", entry);
-    }
 
-    @GetMapping("/leaderboard/category/{categoryId}")
-    public List<LeaderboardEntry> getCategoryLeaderboard(
-            @PathVariable Long categoryId,
-            @RequestParam(defaultValue = "20") int size) {
-        Pageable pageable = PageRequest.of(0, size);
-        return quizResultRepository.findCategoryLeaderboardNative(categoryId, pageable)
-                .getContent()
-                .stream()
-                .map(this::toLeaderboardEntry)
-                .toList();
+        return Map.of(
+                "rank", rank,
+                "displayName", user.getDisplayName(),
+                "bestScore", entry.scorePercent(),
+                "correctAnswers", entry.correctAnswers(),
+                "totalQuestions", entry.totalQuestions(),
+                "category", entry.categoryName(),
+                "finishedAt", entry.finishedAt()
+        );
     }
 
     private LeaderboardEntry toLeaderboardEntry(Object[] row) {
-        Object timestamp = row[6];
-        LocalDateTime finishedAt = timestamp instanceof java.sql.Timestamp ts
+        LocalDateTime finishedAt = row[6] instanceof java.sql.Timestamp ts
                 ? ts.toLocalDateTime()
-                : (LocalDateTime) timestamp;
+                : (LocalDateTime) row[6];
 
         return new LeaderboardEntry(
-                ((Number) row[0]).longValue(),
                 (String) row[1],
                 ((Number) row[2]).intValue(),
                 ((Number) row[3]).intValue(),
                 ((Number) row[4]).intValue(),
-                (String) row[5],
+                row[5] != null ? (String) row[5] : "Random",
                 finishedAt
         );
     }

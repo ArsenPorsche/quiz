@@ -4,33 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="implement POST /api/quiz/submit with scoring and result saving">
+    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="implement working leaderboard with ranking">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SeedConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SeedConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/LeaderboardEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/LeaderboardEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/QuizResultDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/QuizResultDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/SubmitQuizRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/SubmitQuizRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuizResultRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuizResultRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/KeyGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/KeyGenerator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/CategoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SeedConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SeedConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/LeaderboardEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/LeaderboardEntry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizQuestionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizQuestionDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizResultDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizResultDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/StartQuizRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/StartQuizRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest$UserAnswer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest$UserAnswer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/AuthResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/AuthResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/RegisterRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Category$CategoryBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Category$CategoryBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/QuizResult$QuizResultBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/QuizResult$QuizResultBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/User$UserBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuestionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuestionRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuizResultRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuizResultRepository.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763550666447</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="implement working leaderboard with ranking">
+      <option name="closed" value="true" />
+      <created>1763739954747</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1763739954747</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,7 +227,8 @@
     <MESSAGE value="add random question queries to QuestionRepository" />
     <MESSAGE value="implement POST /api/quiz/start" />
     <MESSAGE value="implement POST /api/quiz/submit with scoring and result saving" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement POST /api/quiz/submit with scoring and result saving" />
+    <MESSAGE value="implement working leaderboard with ranking" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement working leaderboard with ranking" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
