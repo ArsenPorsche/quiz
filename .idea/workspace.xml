@@ -6,7 +6,32 @@
   <component name="ChangeListManager">
     <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="implement POST /api/quiz/submit with scoring and result saving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuizResultRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuizResultRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/KeyGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/KeyGenerator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/CategoryController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/CategoryRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/LeaderboardEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/LeaderboardEntry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuestionResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizQuestionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizQuestionDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizResultDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/QuizResultDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/StartQuizRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/StartQuizRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest$UserAnswer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest$UserAnswer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/SubmitQuizRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/AuthResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/AuthResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/dto/auth/RegisterRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Category$CategoryBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/Category$CategoryBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/QuizResult$QuizResultBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/QuizResult$QuizResultBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/model/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/model/User$UserBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuizResultRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuizResultRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +59,12 @@
     &quot;assignee&quot;: &quot;ArsenPorsche&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ArsenPorsche/quiz.git",
-    "accountId": "621239e9-b9bb-4e66-9b58-c577fe20fb25"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ArsenPorsche/quiz&quot;,
+    &quot;accountId&quot;: &quot;5e23e168-9f07-471d-879b-f5fe4e610de6&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -56,33 +81,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.KeyGenerator.executor&quot;: &quot;Run&quot;,
-    &quot;Application.QuizApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.quiz [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.quiz [install].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/quiz-and-leaderboard&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.KeyGenerator.executor": "Run",
+    "Application.QuizApplication.executor": "Run",
+    "Maven.quiz [clean].executor": "Run",
+    "Maven.quiz [install].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "Merging feature/quiz-and-leaderboard",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.QuizApplication">
     <configuration name="QuizApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.quiz.QuizApplication" />
@@ -114,7 +139,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
