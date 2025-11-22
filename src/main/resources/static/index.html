@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            margin: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        select, button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .question {
+            margin: 25px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+
+        .result, table {
+            padding: 20px;
+            border: 1px solid #000;
+            margin: 20px 0;
+            background: #f9f9f9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Quiz App</h1>
+
+    <div style="text-align: center; margin: 30px 0;">
+        <label>Player: </label>
+        <select id="playerSelect" onchange="switchPlayer()">
+            <option value="arsen">Arsen</option>
+            <option value="palina">Palina</option>
+            <option value="admin">Admin</option>
+        </select>
+    </div>
+
+    <div style="text-align: center;">
+        <button onclick="startQuiz(null)">Random Quiz</button>
+        <button onclick="startQuiz(1)">General Knowledge</button>
+        <button onclick="startQuiz(2)">Java & Programming</button>
+        <button onclick="startQuiz(3)">Science</button>
+        <br><br>
+        <button onclick="showMyResults()">My Results</button>
+        <button onclick="showLeaderboard()">Global Leaderboard</button>
+    </div>
+
+    <div id="content"></div>
+</div>
+
+<script>
+    const players = {
+        arsen: {username: "arsen", password: "123"},
+        palina: {username: "palina", password: "123"},
+        admin: {username: "admin", password: "admin"}
+    };
+
+    let token = '';
+    let currentQuestions = [];
+    let currentCategoryId = null;
+
+    async function switchPlayer() {
+        const user = players[document.getElementById("playerSelect").value];
+        const resp = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username: user.username, password: user.password})
+        });
+        if (resp.ok) {
+            const data = await resp.json();
+            token = data.token;
+        } else {
+            alert("Login failed!");
+        }
+    }
+
+    async function startQuiz(categoryId) {
+        await switchPlayer();
+        currentCategoryId = categoryId;
+
+        const resp = await fetch('/api/quiz/start', {
+            method: 'POST',
+            headers: {Authorization: 'Bearer ' + token, 'Content-Type': 'application/json'},
+            body: JSON.stringify({categoryId, questionsCount: 5})
+        });
+        currentQuestions = await resp.json();
+
+        let html = `<h2>${categoryId ? 'Category Quiz' : 'Random Quiz'}</h2>`;
+        currentQuestions.forEach((q, i) => {
+            html += `
+            <div class="question">
+                <p><strong>${i + 1}. ${q.text}</strong></p>
+                <label><input type="radio" name="q${q.id}" value="A"> A) ${q.optionA}</label><br>
+                <label><input type="radio" name="q${q.id}" value="B"> B) ${q.optionB}</label><br>
+                <label><input type="radio" name="q${q.id}" value="C"> C) ${q.optionC}</label><br>
+                <label><input type="radio" name="q${q.id}" value="D"> D) ${q.optionD}</label>
+            </div>`;
+        });
+        html += '<button onclick="submitQuiz()">Submit Answers</button>';
+        document.getElementById('content').innerHTML = html;
+    }
+
+    async function submitQuiz() {
+        const answers = currentQuestions.map(q => ({
+            questionId: q.id,
+            selectedAnswer: document.querySelector(`input[name="q${q.id}"]:checked`)?.value || ''
+        })).filter(a => a.selectedAnswer);
+
+        const resp = await fetch('/api/quiz/submit', {
+            method: 'POST',
+            headers: {Authorization: 'Bearer ' + token, 'Content-Type': 'application/json'},
+            body: JSON.stringify({answers, categoryId: currentCategoryId})
+        });
+        const result = await resp.json();
+
+        document.getElementById('content').innerHTML = `
+        <div class="result">
+            <h2>Result</h2>
+            <p>Correct: ${result.correctAnswers} / ${result.totalQuestions}</p>
+            <p>Score: <strong>${result.scorePercent}%</strong></p>
+            <button onclick="document.getElementById('content').innerHTML=''">Back</button>
+        </div>`;
+    }
+
+    async function showMyResults() {
+        await switchPlayer();  // ← Ждём полного логина
+        const resp = await fetch('/api/quiz/results?size=20', {
+            headers: {Authorization: 'Bearer ' + token}
+        });
+        const page = await resp.json();
+
+        let html = '<h2>My Results</h2><table><tr><th>Date</th><th>Correct</th><th>Total</th><th>Score</th><th>Category</th></tr>';
+        page.content.forEach(r => {
+            const date = new Date(r.finishedAt).toLocaleString();
+            const cat = r.categoryName || 'Random Quiz';
+            html += `<tr><td>${date}</td><td>${r.correctAnswers}</td><td>${r.totalQuestions}</td><td>${r.scorePercent}%</td><td>${cat}</td></tr>`;
+        });
+        html += '</table><button onclick="document.getElementById(\'content\').innerHTML=\'\'">Close</button>';
+        document.getElementById('content').innerHTML = html;
+    }
+
+    async function showLeaderboard() {
+        await switchPlayer();  // ← Ждём полного логина
+        const resp = await fetch('/api/quiz/leaderboard/global?size=20', {
+            headers: {Authorization: 'Bearer ' + token}
+        });
+        const data = await resp.json();
+
+        let html = '<h2>Global Leaderboard</h2><table><tr><th>#</th><th>Player</th><th>Score</th><th>Correct/Total</th><th>Category</th><th>Date</th></tr>';
+        data.forEach((e, i) => {
+            const date = new Date(e.finishedAt).toLocaleString();
+            html += `<tr><td>${i + 1}</td><td>${e.displayName}</td><td>${e.scorePercent}%</td><td>${e.correctAnswers}/${e.totalQuestions}</td><td>${e.categoryName || 'Random'}</td><td>${date}</td></tr>`;
+        });
+        html += '</table><button onclick="document.getElementById(\'content\').innerHTML=\'\'">Close</button>';
+        document.getElementById('content').innerHTML = html;
+    }
+
+    switchPlayer();
+</script>
+<div id="adminPanel"
+     style="margin:30px 0;padding:15px;border:1px solid #000;background:#fff;display:none;text-align:center;">
+    <strong>Admin — Upload CSV</strong><br><br>
+    <input type="file" id="csvFile" accept=".csv">
+    <button onclick="uploadCsv()" style="margin-left:10px;padding:6px 12px;">Upload</button>
+    <span id="uploadStatus" style="margin-left:15px;font-weight:bold;"></span>
+</div>
+
+<script>
+    function checkAndShowAdminPanel() {
+        document.getElementById("adminPanel").style.display =
+            document.getElementById("playerSelect").value === "admin" ? "block" : "none";
+    }
+
+    document.getElementById("playerSelect").addEventListener("change", checkAndShowAdminPanel);
+    checkAndShowAdminPanel();
+
+    async function uploadCsv() {
+        const file = document.getElementById("csvFile").files[0];
+        const status = document.getElementById("uploadStatus");
+        if (!file) return status.textContent = "No file";
+
+        await switchPlayer();
+        const form = new FormData();
+        form.append("file", file);
+        status.textContent = "Uploading...";
+
+        try {
+            const r = await fetch("/api/admin/questions/upload-csv", {
+                method: "POST",
+                headers: {Authorization: "Bearer " + token},
+                body: form
+            });
+            const msg = await r.text();
+            status.textContent = r.ok ? msg : "Error: " + msg;
+            if (r.ok) document.getElementById("csvFile").value = "";
+        } catch (e) {
+            status.textContent = "Network error";
+        }
+    }
+</script>
+</body>
+</html>
