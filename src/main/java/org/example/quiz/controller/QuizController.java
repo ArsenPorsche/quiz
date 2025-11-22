@@ -177,31 +177,6 @@ public class QuizController {
                 .toList();
     }
 
-    @GetMapping("/leaderboard/me")
-    public Map<String, Object> getMyPosition(Authentication auth) {
-        User user = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Long rank = quizResultRepository.findMyGlobalRank(user.getId());
-        var best = quizResultRepository.findMyBestResultNative(user.getId());
-
-        if (best.isEmpty()) {
-            return Map.of("message", "No results yet", "rank", null);
-        }
-
-        LeaderboardEntry entry = toLeaderboardEntry(best.get());
-
-        return Map.of(
-                "rank", rank,
-                "displayName", user.getDisplayName(),
-                "bestScore", entry.scorePercent(),
-                "correctAnswers", entry.correctAnswers(),
-                "totalQuestions", entry.totalQuestions(),
-                "category", entry.categoryName(),
-                "finishedAt", entry.finishedAt()
-        );
-    }
-
     private LeaderboardEntry toLeaderboardEntry(Object[] row) {
         LocalDateTime finishedAt = row[6] instanceof java.sql.Timestamp ts
                 ? ts.toLocalDateTime()
