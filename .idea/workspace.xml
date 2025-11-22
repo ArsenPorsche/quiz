@@ -4,26 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/AdminQuestionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/CategoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/CategoryDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/CategoryRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/QuestionRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/dto/QuestionResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/util/CsvUtils.java" afterDir="false" />
+    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="upload UI + fix leaderboard and player results bugs">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quiz/controller/AdminQuestionControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quiz/controller/CategoryControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuestionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/security/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuestionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/repository/QuestionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/quizdb.mv.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +25,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -48,8 +40,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/ArsenPorsche/quiz.git&quot;,
-    &quot;accountId&quot;: &quot;621239e9-b9bb-4e66-9b58-c577fe20fb25&quot;
+    &quot;url&quot;: &quot;https://github.com/ArsenPorsche/quiz&quot;,
+    &quot;accountId&quot;: &quot;5e23e168-9f07-471d-879b-f5fe4e610de6&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -72,6 +64,10 @@
   "keyToString": {
     "Application.KeyGenerator.executor": "Run",
     "Application.QuizApplication.executor": "Run",
+    "JUnit.AdminQuestionControllerTest.executor": "Run",
+    "JUnit.AuthControllerTest.executor": "Run",
+    "JUnit.CategoryControllerTest.executor": "Run",
+    "JUnit.CategoryControllerTest.getAll_returnsDtosWithCounts.executor": "Run",
     "Maven.quiz [clean].executor": "Run",
     "Maven.quiz [install].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -79,13 +75,23 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feature/quiz-and-leaderboard",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "to.speed.mode.migration.done": "true"
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.AdminQuestionControllerTest">
     <configuration name="QuizApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.quiz.QuizApplication" />
       <module name="quiz" />
@@ -99,8 +105,81 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AdminQuestionControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="quiz" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.quiz.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.quiz.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.quiz.controller.AdminQuestionControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="quiz" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.quiz.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.quiz.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.quiz.controller.AuthControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CategoryControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="quiz" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.quiz.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.quiz.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.quiz.controller.CategoryControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CategoryControllerTest.getAll_returnsDtosWithCounts" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="quiz" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.quiz.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.quiz.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.example.quiz.controller.CategoryControllerTest" />
+      <option name="METHOD_NAME" value="getAll_returnsDtosWithCounts" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="QuizApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="quiz" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.quiz.QuizApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AdminQuestionControllerTest" />
+        <item itemvalue="JUnit.AuthControllerTest" />
+        <item itemvalue="JUnit.CategoryControllerTest" />
+        <item itemvalue="JUnit.CategoryControllerTest.getAll_returnsDtosWithCounts" />
         <item itemvalue="Application.QuizApplication" />
       </list>
     </recent_temporary>
@@ -108,7 +187,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
@@ -119,8 +199,80 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1763479067822</updated>
+      <workItem from="1763497221586" duration="1167000" />
+      <workItem from="1763498397444" duration="799000" />
+      <workItem from="1763547523457" duration="5102000" />
+      <workItem from="1763752099302" duration="3326000" />
     </task>
+    <task id="LOCAL-00001" summary="create feature branch for quiz &amp; leaderboard">
+      <option name="closed" value="true" />
+      <created>1763498520843</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763498520843</updated>
+    </task>
+    <task id="LOCAL-00002" summary="create feature branch for quiz &amp; leaderboard">
+      <option name="closed" value="true" />
+      <created>1763498818276</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763498818276</updated>
+    </task>
+    <task id="LOCAL-00003" summary="create feature branch for quiz &amp; leaderboard">
+      <option name="closed" value="true" />
+      <created>1763547537361</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763547537361</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add random question queries to QuestionRepository">
+      <option name="closed" value="true" />
+      <created>1763548710093</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763548710093</updated>
+    </task>
+    <task id="LOCAL-00005" summary="implement POST /api/quiz/start">
+      <option name="closed" value="true" />
+      <created>1763549743713</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763549743713</updated>
+    </task>
+    <task id="LOCAL-00006" summary="implement POST /api/quiz/submit with scoring and result saving">
+      <option name="closed" value="true" />
+      <created>1763550666447</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1763550666447</updated>
+    </task>
+    <task id="LOCAL-00007" summary="implement working leaderboard with ranking">
+      <option name="closed" value="true" />
+      <created>1763739954747</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1763739954747</updated>
+    </task>
+    <task id="LOCAL-00008" summary="upload UI + fix leaderboard and player results bugs">
+      <option name="closed" value="true" />
+      <created>1763750883864</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1763750883864</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -132,5 +284,19 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit for quiz" />
+    <MESSAGE value="create feature branch for quiz &amp; leaderboard" />
+    <MESSAGE value="add random question queries to QuestionRepository" />
+    <MESSAGE value="implement POST /api/quiz/start" />
+    <MESSAGE value="implement POST /api/quiz/submit with scoring and result saving" />
+    <MESSAGE value="implement working leaderboard with ranking" />
+    <MESSAGE value="upload UI + fix leaderboard and player results bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload UI + fix leaderboard and player results bugs" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

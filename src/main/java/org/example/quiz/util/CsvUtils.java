@@ -70,7 +70,7 @@ public class CsvUtils {
                         .optionB(optionB)
                         .optionC(optionC)
                         .optionD(optionD)
-                        .correctAnswer(correct.charAt(0))
+                        .correctAnswer(correct)
                         .category(category)
                         .build();
 
