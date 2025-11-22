@@ -34,6 +34,8 @@ public class SecurityConfig {
 
 
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/index.html", "/**.html", "/**.js", "/**.css", "/**.png", "/**.jpg", "/**.ico").permitAll()
+
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
