@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/quiz")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('PLAYER', 'ADMIN')")
 public class QuizController {
 
     private final QuestionRepository questionRepository;
