@@ -11,14 +11,12 @@ import org.example.quiz.repository.QuizResultRepository;
 import org.example.quiz.repository.UserRepository;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -116,16 +114,13 @@ public class QuizController {
     public Page<QuizResultDto> getMyResults(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) Long categoryId,
             Authentication auth) {
 
         User user = userRepository.findByUsername(auth.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("finishedAt").descending());
-        Page<QuizResult> results = categoryId == null
-                ? quizResultRepository.findByUser(user, pageable)
-                : quizResultRepository.findByUserAndCategoryId(user, categoryId, pageable);
+        Page<QuizResult> results = quizResultRepository.findByUser(user, pageable);
 
         return results.map(r -> new QuizResultDto(
                 r.getTotalQuestions(),
@@ -133,44 +128,14 @@ public class QuizController {
                 r.getScorePercent(),
                 "",
                 r.getId(),
-                r.getCategoryName() != null ? r.getCategoryName() : "Random Quiz",
+                "Random Quiz",
                 r.getFinishedAt()
         ));
-    }
-
-    @GetMapping("/results/{id}")
-    public QuizResultDto getResult(@PathVariable Long id, Authentication auth) {
-        User user = userRepository.findByUsername(auth.getName())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        QuizResult result = quizResultRepository.findByIdAndUser(id, user)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        return new QuizResultDto(
-                result.getTotalQuestions(),
-                result.getCorrectAnswers(),
-                result.getScorePercent(),
-                "",
-                result.getId(),
-                result.getCategoryName() != null ? result.getCategoryName() : "Random Quiz",
-                result.getFinishedAt()
-        );
     }
 
     @GetMapping("/leaderboard/global")
     public List<LeaderboardEntry> getGlobalLeaderboard(@RequestParam(defaultValue = "20") int size) {
         return quizResultRepository.findGlobalLeaderboardNative(PageRequest.of(0, size))
-                .getContent()
-                .stream()
-                .map(this::toLeaderboardEntry)
-                .toList();
-    }
-
-    @GetMapping("/leaderboard/category/{categoryId}")
-    public List<LeaderboardEntry> getCategoryLeaderboard(
-            @PathVariable Long categoryId,
-            @RequestParam(defaultValue = "20") int size) {
-        return quizResultRepository.findCategoryLeaderboardNative(categoryId, PageRequest.of(0, size))
                 .getContent()
                 .stream()
                 .map(this::toLeaderboardEntry)
