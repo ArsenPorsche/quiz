@@ -170,7 +170,7 @@
     }
 
     async function showMyResults() {
-        await switchPlayer();  // ← Ждём полного логина
+        await switchPlayer();
         const resp = await fetch('/api/quiz/results?size=20', {
             headers: {Authorization: 'Bearer ' + token}
         });
@@ -187,7 +187,7 @@
     }
 
     async function showLeaderboard() {
-        await switchPlayer();  // ← Ждём полного логина
+        await switchPlayer();
         const resp = await fetch('/api/quiz/leaderboard/global?size=20', {
             headers: {Authorization: 'Bearer ' + token}
         });

@@ -2,18 +2,13 @@ package org.example.quiz.controller;
 
 import org.example.quiz.dto.QuestionRequest;
 import org.example.quiz.dto.QuestionResponse;
-import org.example.quiz.model.Category;
-import org.example.quiz.model.Question;
-import org.example.quiz.repository.CategoryRepository;
-import org.example.quiz.repository.QuestionRepository;
+import org.example.quiz.service.AdminQuestionService;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,35 +17,16 @@ class AdminQuestionControllerTest {
 
     @Test
     void createQuestion_success() {
-        QuestionRepository questionRepository = mock(QuestionRepository.class);
-        CategoryRepository categoryRepository = mock(CategoryRepository.class);
+        AdminQuestionService service = mock(AdminQuestionService.class);
 
-        Category cat = Category.builder().id(1L).name("General").build();
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(cat));
+        QuestionResponse response = new QuestionResponse(
+                10L, "Q", "A", "B", "C", "D", "A", 1L, "General"
+        );
+        when(service.createQuestion(any(QuestionRequest.class))).thenReturn(response);
 
-        Question saved = Question.builder()
-                .id(10L)
-                .text("Q")
-                .optionA("A")
-                .optionB("B")
-                .optionC("C")
-                .optionD("D")
-                .correctAnswer("A")
-                .category(cat)
-                .build();
-        when(questionRepository.save(any(Question.class))).thenReturn(saved);
-
-        AdminQuestionController ctrl = new AdminQuestionController(questionRepository, categoryRepository);
+        AdminQuestionController ctrl = new AdminQuestionController(service);
 
         QuestionRequest req = mock(QuestionRequest.class);
-        when(req.categoryId()).thenReturn(1L);
-        when(req.text()).thenReturn("Q");
-        when(req.optionA()).thenReturn("A");
-        when(req.optionB()).thenReturn("B");
-        when(req.optionC()).thenReturn("C");
-        when(req.optionD()).thenReturn("D");
-        when(req.correctAnswer()).thenReturn("A");
-
         ResponseEntity<?> resp = ctrl.createQuestion(req);
 
         assertEquals(201, resp.getStatusCodeValue());
@@ -58,60 +34,115 @@ class AdminQuestionControllerTest {
         QuestionResponse qr = (QuestionResponse) resp.getBody();
         assertEquals(10L, qr.id());
         assertEquals("Q", qr.text());
-        verify(questionRepository, times(1)).save(any(Question.class));
+        verify(service, times(1)).createQuestion(req);
     }
 
     @Test
-    void update_notFound_returns404() {
-        QuestionRepository questionRepository = mock(QuestionRepository.class);
-        CategoryRepository categoryRepository = mock(CategoryRepository.class);
+    void update_success() {
+        AdminQuestionService service = mock(AdminQuestionService.class);
 
-        when(questionRepository.findById(5L)).thenReturn(Optional.empty());
+        QuestionResponse updated = new QuestionResponse(
+                5L, "Updated Q", "A", "B", "C", "D", "B", 1L, "General"
+        );
+        when(service.update(eq(5L), any(QuestionRequest.class))).thenReturn(updated);
 
-        AdminQuestionController ctrl = new AdminQuestionController(questionRepository, categoryRepository);
+        AdminQuestionController ctrl = new AdminQuestionController(service);
 
         QuestionRequest req = mock(QuestionRequest.class);
         ResponseEntity<?> resp = ctrl.update(5L, req);
 
+        assertEquals(200, resp.getStatusCodeValue());
+        assertEquals(updated, resp.getBody());
+        verify(service, times(1)).update(5L, req);
+    }
+
+    @Test
+    void update_notFound_returns404() {
+        AdminQuestionService service = mock(AdminQuestionService.class);
+        when(service.update(eq(5L), any(QuestionRequest.class))).thenReturn(null);
+
+        AdminQuestionController ctrl = new AdminQuestionController(service);
+        QuestionRequest req = mock(QuestionRequest.class);
+        ResponseEntity<?> resp = ctrl.update(5L, req);
+
         assertEquals(404, resp.getStatusCodeValue());
-        verify(questionRepository, never()).save(any());
+        verify(service, times(1)).update(5L, req);
     }
 
     @Test
     void delete_existing_deletesAndReturnsNoContent() {
-        QuestionRepository questionRepository = mock(QuestionRepository.class);
-        CategoryRepository categoryRepository = mock(CategoryRepository.class);
+        AdminQuestionService service = mock(AdminQuestionService.class);
+        when(service.delete(3L)).thenReturn(true);
 
-        when(questionRepository.existsById(3L)).thenReturn(true);
-
-        AdminQuestionController ctrl = new AdminQuestionController(questionRepository, categoryRepository);
+        AdminQuestionController ctrl = new AdminQuestionController(service);
 
         ResponseEntity<Void> resp = ctrl.delete(3L);
 
         assertEquals(204, resp.getStatusCodeValue());
-        verify(questionRepository, times(1)).deleteById(3L);
+        verify(service, times(1)).delete(3L);
+    }
+
+    @Test
+    void delete_notFound_returns404() {
+        AdminQuestionService service = mock(AdminQuestionService.class);
+        when(service.delete(3L)).thenReturn(false);
+
+        AdminQuestionController ctrl = new AdminQuestionController(service);
+
+        ResponseEntity<Void> resp = ctrl.delete(3L);
+
+        assertEquals(404, resp.getStatusCodeValue());
+        verify(service, times(1)).delete(3L);
     }
 
     @Test
     void uploadCsv_validFile_savesAll() throws Exception {
-        QuestionRepository questionRepository = mock(QuestionRepository.class);
-        CategoryRepository categoryRepository = mock(CategoryRepository.class);
+        AdminQuestionService service = mock(AdminQuestionService.class);
+        MockMultipartFile file = new MockMultipartFile("file", "q.csv", "text/csv",
+                "text,optionA,optionB,optionC,optionD,correctAnswer,categoryId\nCsvQ,A,B,C,D,A,10".getBytes());
 
-        Category cat = Category.builder().id(10L).name("CSV").build();
-        when(categoryRepository.findById(10L)).thenReturn(Optional.of(cat));
+        when(service.uploadCsv(file)).thenReturn(1);
 
-        String csv = "text,optionA,optionB,optionC,optionD,correctAnswer,categoryId\n" +
-                "CsvQ,A,B,C,D,A,10\n";
-        MockMultipartFile file = new MockMultipartFile("file", "q.csv", "text/csv", csv.getBytes());
-
-        when(questionRepository.saveAll(anyList())).thenAnswer(invocation -> invocation.getArgument(0));
-
-        AdminQuestionController ctrl = new AdminQuestionController(questionRepository, categoryRepository);
+        AdminQuestionController ctrl = new AdminQuestionController(service);
 
         ResponseEntity<?> resp = ctrl.uploadCsv(file);
 
         assertEquals(201, resp.getStatusCodeValue());
         assertTrue(resp.getBody().toString().startsWith("Inserted: "));
-        verify(questionRepository, times(1)).saveAll(anyList());
+        verify(service, times(1)).uploadCsv(file);
+    }
+
+    @Test
+    void random_returnsList() {
+        AdminQuestionService service = mock(AdminQuestionService.class);
+        List<QuestionResponse> questions = List.of(
+                new QuestionResponse(1L,"Q1","A","B","C","D","A",1L,"General")
+        );
+        when(service.random(10)).thenReturn(questions);
+
+        AdminQuestionController ctrl = new AdminQuestionController(service);
+
+        ResponseEntity<List<QuestionResponse>> resp = ctrl.random(10);
+
+        assertEquals(200, resp.getStatusCodeValue());
+        assertEquals(questions, resp.getBody());
+        verify(service, times(1)).random(10);
+    }
+
+    @Test
+    void list_returnsFiltered() {
+        AdminQuestionService service = mock(AdminQuestionService.class);
+        List<QuestionResponse> questions = List.of(
+                new QuestionResponse(1L,"Q1","A","B","C","D","A",1L,"General")
+        );
+        when(service.list(1L)).thenReturn(questions);
+
+        AdminQuestionController ctrl = new AdminQuestionController(service);
+
+        ResponseEntity<List<QuestionResponse>> resp = ctrl.list(1L);
+
+        assertEquals(200, resp.getStatusCodeValue());
+        assertEquals(questions, resp.getBody());
+        verify(service, times(1)).list(1L);
     }
 }

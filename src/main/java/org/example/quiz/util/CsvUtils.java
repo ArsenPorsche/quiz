@@ -15,13 +15,13 @@ import java.util.Optional;
 
 public class CsvUtils {
 
-    public static List<Question> parseQuestions(MultipartFile file, CategoryRepository categoryRepository) throws Exception {
-        List<Question> result = new ArrayList<>();
-
+    public static List<Question> parseQuestions(MultipartFile file, CategoryRepository categoryRepository) {
         try (Reader reader = new InputStreamReader(file.getInputStream());
              CSVReaderHeaderAware csv = new CSVReaderHeaderAware(reader)) {
 
+            List<Question> result = new ArrayList<>();
             Map<String, String> row;
+
             while ((row = csv.readMap()) != null) {
                 String text = safeTrim(row.getOrDefault("text", row.getOrDefault("question", "")));
                 String optionA = safeTrim(row.getOrDefault("optionA", ""));
@@ -76,9 +76,13 @@ public class CsvUtils {
 
                 result.add(q);
             }
+            return result;
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Failed to parse CSV: " + e.getMessage(), e);
         }
 
-        return result;
+
     }
 
     private static String safeTrim(String s) {
