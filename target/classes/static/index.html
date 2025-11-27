@@ -128,7 +128,7 @@
         const resp = await fetch('/api/quiz/start', {
             method: 'POST',
             headers: {Authorization: 'Bearer ' + token, 'Content-Type': 'application/json'},
-            body: JSON.stringify({categoryId, questionsCount: 5})
+            body: JSON.stringify({categoryId, questionsCount: 10})
         });
         currentQuestions = await resp.json();
 
