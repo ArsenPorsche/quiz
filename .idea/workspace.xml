@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="upload UI + fix leaderboard and player results bugs">
+    <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="fixing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/quizdb.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/quizdb.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/QuizController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuizResultRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/repository/QuizResultRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/config/SecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -134,7 +131,7 @@
       <workItem from="1763498397444" duration="799000" />
       <workItem from="1763547523457" duration="5102000" />
       <workItem from="1763752099302" duration="3326000" />
-      <workItem from="1764233897923" duration="1063000" />
+      <workItem from="1764233897923" duration="1896000" />
     </task>
     <task id="LOCAL-00001" summary="create feature branch for quiz &amp; leaderboard">
       <option name="closed" value="true" />
@@ -200,7 +197,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763750883864</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixing">
+      <option name="closed" value="true" />
+      <created>1764234991418</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1764234991418</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,7 +230,8 @@
     <MESSAGE value="implement POST /api/quiz/submit with scoring and result saving" />
     <MESSAGE value="implement working leaderboard with ranking" />
     <MESSAGE value="upload UI + fix leaderboard and player results bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="upload UI + fix leaderboard and player results bugs" />
+    <MESSAGE value="fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
