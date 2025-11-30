@@ -3,10 +3,12 @@ package org.example.quiz.config;
 import org.example.quiz.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +19,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -31,9 +34,12 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
-
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth -> auth
+
+                        .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+
                         .requestMatchers("/", "/index.html", "/**.html", "/**.js", "/**.css", "/**.png", "/**.jpg", "/**.ico").permitAll()
 
                         .requestMatchers("/h2-console/**").permitAll()
@@ -44,6 +50,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/categories").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
+
+
                         .requestMatchers("/api/quiz/**").hasAnyRole("PLAYER", "ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -51,16 +59,15 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))
                 )
-
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
         return http.build();
     }
 
     @Bean
+    @Primary
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(10);
     }
 
     @Bean
@@ -75,7 +82,7 @@ public class SecurityConfig {
                         .credentialsExpired(false)
                         .disabled(!user.isEnabled())
                         .build())
-                .orElseThrow(() -> new UsernameNotFoundException("User " + username +  " is not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " is not found"));
     }
 
     @Bean
@@ -83,3 +90,4 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 }
+

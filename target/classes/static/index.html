@@ -3,247 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
+    <title>Quiz Master</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #fff;
-            color: #000;
-            margin: 40px;
-            line-height: 1.6;
-        }
+        :root{--p:#000;--g:#2e8b57;--r:#c41e3a;--gray:#555}
+        body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;color:#000;margin:0;padding:20px;line-height:1.6}
+        .c{max-width:900px;margin:0 auto;padding:20px}
+        h1{text-align:center;font-size:3.5em;margin:30px 0 10px;color:var(--p)}
+        .ps{text-align:center;margin:40px 0;font-size:1.4em}
+        select,button,input[type=number]{padding:14px 20px;margin:8px;font-size:17px;border:2px solid var(--p);border-radius:10px;background:white}
+        button{background:var(--p);color:white;cursor:pointer;transition:.3s;font-weight:bold}
+        button:hover{background:#333;transform:translateY(-2px)}
+        .cat{display:inline-block;margin:15px;padding:22px 35px;background:white;border:3px solid var(--p);border-radius:16px;cursor:pointer;font-size:1.4em;min-width:220px;text-align:center;box-shadow:0 6px 12px rgba(0,0,0,.15);transition:all .3s}
+        .cat:hover{background:#f0f0f0;transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,.2)}
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        #adminPanel{background:white;border:3px solid var(--p);padding:40px;border-radius:16px;text-align:center;margin:60px 0;display:none;box-shadow:0 8px 25px rgba(0,0,0,.1)}
+        #adminPanel h2{color:var(--p);margin-top:0}
 
-        h1, h2 {
-            text-align: center;
-        }
+        #playerPanel{display:none}
+        #questionCountBlock{display:none;text-align:center;margin:35px 0;padding:25px;background:#f9f9f9;border-radius:16px;border:2px dashed #ccc}
+        #startSec{display:none;text-align:center;margin:50px 0}
+        #startBtn{font-size:28px;padding:25px 80px;background:var(--g);border:none;border-radius:20px;font-weight:bold;box-shadow:0 8px 20px rgba(46,139,87,.4);transition:all .3s;cursor:pointer}
+        #startBtn:hover{background:#256d45;transform:scale(1.08)}
 
-        select, button {
-            padding: 10px 15px;
-            margin: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            background: #000;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #333;
-        }
-
-        .question {
-            margin: 25px 0;
-            padding: 15px;
-            border: 1px solid #ccc;
-        }
-
-        .result, table {
-            padding: 20px;
-            border: 1px solid #000;
-            margin: 20px 0;
-            background: #f9f9f9;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background: #000;
-            color: #fff;
-        }
+        #leaderboardSection{display:none;margin-top:80px;background:white;padding:30px;border-radius:16px;border:2px solid #ddd}
+        table{width:100%;border-collapse:collapse;margin:30px 0;font-size:1.2em}
+        th,td{border:1px solid var(--p);padding:16px;text-align:center}
+        th{background:var(--p);color:white}
+        .result-box{background:#f9f9f9;padding:70px;border-radius:20px;border:5px solid var(--p);text-align:center;margin:50px 0}
+        .big-score{font-size:80px;font-weight:bold;margin:40px 0}
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Quiz App</h1>
+<div class="c">
+    <h1>Quiz Master</h1>
 
-    <div style="text-align: center; margin: 30px 0;">
-        <label>Player: </label>
-        <select id="playerSelect" onchange="switchPlayer()">
-            <option value="arsen">Arsen</option>
-            <option value="palina">Palina</option>
-            <option value="admin">Admin</option>
-        </select>
+    <div class="ps">
+        <label><strong>Player:</strong></label>
+        <select id="s"><option value="">— Select player —</option></select>
+        <span id="u" style="margin-left:20px;font-weight:bold;color:var(--g);font-size:1.3em;"></span>
     </div>
 
-    <div style="text-align: center;">
-        <button onclick="startQuiz(null)">Random Quiz</button>
-        <button onclick="startQuiz(1)">General Knowledge</button>
-        <button onclick="startQuiz(2)">Java & Programming</button>
-        <button onclick="startQuiz(3)">Science</button>
-        <br><br>
-        <button onclick="showMyResults()">My Results</button>
-        <button onclick="showLeaderboard()">Global Leaderboard</button>
+    <div id="playerPanel">
+        <div style="text-align:center;margin:40px 0">
+            <div class="cat" onclick="sel(null)">Random Quiz<br></div>
+            <div class="cat" onclick="sel(1)">Math</div>
+            <div class="cat" onclick="sel(2)">Movies</div>
+            <div class="cat" onclick="sel(3)">Science</div>
+            <div class="cat" onclick="sel(4)">General Knowledge</div>
+            <div class="cat" onclick="sel(5)">Programming</div>
+        </div>
+
+        <div style="text-align:center;margin:50px 0">
+            <button onclick="myRes()">My Results</button>
+            <button onclick="lb()">Global Leaderboard</button>
+        </div>
+
+        <div id="questionCountBlock">
+            <strong>How many questions?</strong><br><br>
+            <input type="number" id="cnt" min="1" value="10" style="width:140px;text-align:center;font-size:1.5em">
+            <span id="hint" style="margin-left:15px;color:var(--gray);font-weight:bold;font-size:1.3em"></span>
+        </div>
+
+        <div id="startSec">
+            <p style="font-size:1.6em;margin:40px 0">
+                Ready to start <strong style="color:var(--g)" id="catName">quiz</strong><br>
+                with <strong id="qCount">10</strong> questions?
+            </p>
+            <button id="startBtn" onclick="startQuiz()">START QUIZ</button>
+        </div>
+    </div>
+
+    <div id="adminPanel">
+        <h2>Admin Zone</h2>
+        <p><strong>Upload questions (CSV)</strong></p>
+        <input type="file" id="csv" accept=".csv">
+        <button onclick="up()">Upload CSV</button>
+        <span id="st" style="margin-left:15px;font-weight:bold;color:var(--g)"></span>
+        <div style="margin-top:40px">
+            <button onclick="lb()" style="font-size:18px;padding:15px 40px">Global Leaderboard</button>
+        </div>
+    </div>
+
+    <div id="leaderboardSection">
+        <h2>Global Leaderboard</h2>
+        <div style="text-align:center;margin:30px 0">
+            <select id="f" onchange="lb()">
+                <option value="">All Categories</option>
+                <option value="1">Math</option><option value="2">Movies</option><option value="3">Science</option>
+                <option value="4">General Knowledge</option><option value="5">Programming</option>
+            </select>
+            <button onclick="document.getElementById('leaderboardSection').style.display='none'">Close</button>
+        </div>
+        <div id="lbc"></div>
     </div>
 
     <div id="content"></div>
 </div>
 
 <script>
-    const players = {
-        arsen: {username: "arsen", password: "123"},
-        palina: {username: "palina", password: "123"},
-        admin: {username: "admin", password: "admin"}
-    };
+    let t='', r='', qs=[], cat=null, cnts={total:50}, currentView='menu';
+    const names=["","Math","Movies","Science","General Knowledge","Programming"];
 
-    let token = '';
-    let currentQuestions = [];
-    let currentCategoryId = null;
-
-    async function switchPlayer() {
-        const user = players[document.getElementById("playerSelect").value];
-        const resp = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username: user.username, password: user.password})
-        });
-        if (resp.ok) {
-            const data = await resp.json();
-            token = data.token;
-        } else {
-            alert("Login failed!");
-        }
+    async function api(u,o={}){
+        const h={'Content-Type':'application/json',...o.headers};
+        if(t) h.Authorization='Bearer '+t;
+        return fetch(u,{...o,headers:h});
     }
 
-    async function startQuiz(categoryId) {
-        await switchPlayer();
-        currentCategoryId = categoryId;
+    async function load(){
+        const s=document.getElementById('s');
+        s.innerHTML='<option>Loading...</option>'; s.disabled=true;
+        try{
+            const res=await fetch('/api/auth/players');
+            if(res.ok){
+                const p=await res.json();
+                s.innerHTML='<option value="">— Select player —</option>';
+                p.forEach(x=>{const o=document.createElement('option');o.value=x.username;o.textContent=x.displayName+(x.role==='ADMIN'?' (Admin)':"");s.appendChild(o)});
+            }
+        }catch{ s.innerHTML='<option>Server offline</option>'; }
+        s.disabled=false;
+    }
 
-        const resp = await fetch('/api/quiz/start', {
+    async function login(){
+        const u=document.getElementById('s').value;
+        if(!u){ logout(); return; }
+        const p=prompt(`Password for ${u}:`);
+        if(!p){ document.getElementById('s').value=''; logout(); return; }
+        try{
+            const res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
+            if(!res.ok){ alert('Wrong password!'); document.getElementById('s').value=''; logout(); return; }
+            const d=await res.json();
+            t=d.token; r=d.role || 'PLAYER';
+            document.getElementById('u').textContent=`— ${d.displayName}`;
+            document.getElementById('playerPanel').style.display = r==='ADMIN' ? 'none' : 'block';
+            document.getElementById('adminPanel').style.display = r==='ADMIN' ? 'block' : 'none';
+            document.getElementById('questionCountBlock').style.display='none';
+            document.getElementById('startSec').style.display='none';
+            clear();
+            if(r!=='ADMIN') await loadCounts();
+            if(currentView === 'myResults') myRes();
+        }catch{ alert('Login error'); logout(); }
+    }
+
+    function logout(){
+        t=''; r=''; cat=null;
+        document.getElementById('u').textContent='';
+        document.getElementById('playerPanel').style.display='none';
+        document.getElementById('adminPanel').style.display='none';
+        document.getElementById('questionCountBlock').style.display='none';
+        document.getElementById('startSec').style.display='none';
+        clear();
+    }
+
+    async function loadCounts(){
+        try{
+            const res=await api('/api/quiz/questions/counts');
+            if(res.ok) cnts=await res.json();
+        }catch(e){console.warn(e)}
+    }
+
+    function sel(id){
+        if(r==='ADMIN') return;
+        cat = id;
+        document.getElementById('catName').textContent = id ? names[id] : 'Random Quiz';
+        document.getElementById('qCount').textContent = document.getElementById('cnt').value || 10;
+
+        const max = id ? (cnts[id] || 10) : (cnts.total || 50);
+        document.getElementById('cnt').max = max;
+        if(+document.getElementById('cnt').value > max) document.getElementById('cnt').value = max;
+        document.getElementById('hint').textContent = `(max: ${max} questions)`;
+
+        document.getElementById('questionCountBlock').style.display = 'block';
+        document.getElementById('startSec').style.display = 'block';
+    }
+
+    async function startQuiz(){
+        const n = +document.getElementById('cnt').value || 10;
+        const max = cat ? (cnts[cat] || 10) : (cnts.total || 50);
+        if(n < 1 || n > max){ alert(`Enter 1–${max}`); return; }
+        const res = await api('/api/quiz/start', {
             method: 'POST',
-            headers: {Authorization: 'Bearer ' + token, 'Content-Type': 'application/json'},
-            body: JSON.stringify({categoryId, questionsCount: 10})
+            body: JSON.stringify({categoryId: cat, questionsCount: n})
         });
-        currentQuestions = await resp.json();
+        if(!res.ok){ alert('Failed to load questions'); return; }
+        qs = await res.json();
+        renderQuiz();
+    }
 
-        let html = `<h2>${categoryId ? 'Category Quiz' : 'Random Quiz'}</h2>`;
-        currentQuestions.forEach((q, i) => {
-            html += `
-            <div class="question">
-                <p><strong>${i + 1}. ${q.text}</strong></p>
+    function renderQuiz(){
+        const title = cat ? names[cat] : 'Random Quiz';
+        let h = `<h2 style="text-align:center;margin:40px 0">${title}<br><small>${qs.length} questions</small></h2>`;
+        qs.forEach((q,i) => {
+            h += `<div style="background:#f9f9f9;padding:30px;margin:35px 0;border-radius:16px">
+                <p><strong>${i+1}. ${q.text}</strong></p>
                 <label><input type="radio" name="q${q.id}" value="A"> A) ${q.optionA}</label><br>
                 <label><input type="radio" name="q${q.id}" value="B"> B) ${q.optionB}</label><br>
                 <label><input type="radio" name="q${q.id}" value="C"> C) ${q.optionC}</label><br>
                 <label><input type="radio" name="q${q.id}" value="D"> D) ${q.optionD}</label>
             </div>`;
         });
-        html += '<button onclick="submitQuiz()">Submit Answers</button>';
-        document.getElementById('content').innerHTML = html;
+        h += `<div style="text-align:center;margin:50px"><button onclick="submitAnswers()" style="font-size:24px;padding:20px 70px">Submit Answers</button></div>`;
+        document.getElementById('content').innerHTML = h;
+        document.getElementById('startSec').style.display = 'none';
+        document.getElementById('questionCountBlock').style.display = 'none';
     }
 
-    async function submitQuiz() {
-        const answers = currentQuestions.map(q => ({
+    window.submitAnswers = async function(){
+        const answers = qs.map(q => ({
             questionId: q.id,
-            selectedAnswer: document.querySelector(`input[name="q${q.id}"]:checked`)?.value || ''
-        })).filter(a => a.selectedAnswer);
-
-        const resp = await fetch('/api/quiz/submit', {
+            selectedAnswer: document.querySelector(`input[name="q${q.id}"]:checked`)?.value || null
+        })).filter(x => x.selectedAnswer);
+        if(!answers.length){ alert('Answer at least one!'); return; }
+        const res = await api('/api/quiz/submit', {
             method: 'POST',
-            headers: {Authorization: 'Bearer ' + token, 'Content-Type': 'application/json'},
-            body: JSON.stringify({answers, categoryId: currentCategoryId})
+            body: JSON.stringify({answers, categoryId: cat})
         });
-        const result = await resp.json();
-
+        const d = await res.json();
+        const color = d.scorePercent >= 80 ? '#2e8b57' : d.scorePercent >= 50 ? 'orange' : 'var(--r)';
         document.getElementById('content').innerHTML = `
-        <div class="result">
-            <h2>Result</h2>
-            <p>Correct: ${result.correctAnswers} / ${result.totalQuestions}</p>
-            <p>Score: <strong>${result.scorePercent}%</strong></p>
-            <button onclick="document.getElementById('content').innerHTML=''">Back</button>
-        </div>`;
+            <div class="result-box">
+                <h2>Quiz Finished!</h2>
+                <p style="font-size:1.8em">Correct: <strong>${d.correctAnswers}/${d.totalQuestions}</strong></p>
+                <div class="big-score" style="color:${color}">${d.scorePercent}%</div>
+            </div>`;
+        currentView = 'result';
     }
 
-    async function showMyResults() {
-        await switchPlayer();
-        const resp = await fetch('/api/quiz/results?size=20', {
-            headers: {Authorization: 'Bearer ' + token}
-        });
-        const page = await resp.json();
-
-        let html = '<h2>My Results</h2><table><tr><th>Date</th><th>Correct</th><th>Total</th><th>Score</th><th>Category</th></tr>';
-        page.content.forEach(r => {
-            const date = new Date(r.finishedAt).toLocaleString();
-            const cat = r.categoryName || 'Random Quiz';
-            html += `<tr><td>${date}</td><td>${r.correctAnswers}</td><td>${r.totalQuestions}</td><td>${r.scorePercent}%</td><td>${cat}</td></tr>`;
-        });
-        html += '</table><button onclick="document.getElementById(\'content\').innerHTML=\'\'">Close</button>';
-        document.getElementById('content').innerHTML = html;
-    }
-
-    async function showLeaderboard() {
-        await switchPlayer();
-        const resp = await fetch('/api/quiz/leaderboard/global?size=20', {
-            headers: {Authorization: 'Bearer ' + token}
-        });
-        const data = await resp.json();
-
-        let html = '<h2>Global Leaderboard</h2><table><tr><th>#</th><th>Player</th><th>Score</th><th>Correct/Total</th><th>Category</th><th>Date</th></tr>';
-        data.forEach((e, i) => {
-            const date = new Date(e.finishedAt).toLocaleString();
-            html += `<tr><td>${i + 1}</td><td>${e.displayName}</td><td>${e.scorePercent}%</td><td>${e.correctAnswers}/${e.totalQuestions}</td><td>${e.categoryName || 'Random'}</td><td>${date}</td></tr>`;
-        });
-        html += '</table><button onclick="document.getElementById(\'content\').innerHTML=\'\'">Close</button>';
-        document.getElementById('content').innerHTML = html;
-    }
-
-    switchPlayer();
-</script>
-<div id="adminPanel"
-     style="margin:30px 0;padding:15px;border:1px solid #000;background:#fff;display:none;text-align:center;">
-    <strong>Admin — Upload CSV</strong><br><br>
-    <input type="file" id="csvFile" accept=".csv">
-    <button onclick="uploadCsv()" style="margin-left:10px;padding:6px 12px;">Upload</button>
-    <span id="uploadStatus" style="margin-left:15px;font-weight:bold;"></span>
-</div>
-
-<script>
-    function checkAndShowAdminPanel() {
-        document.getElementById("adminPanel").style.display =
-            document.getElementById("playerSelect").value === "admin" ? "block" : "none";
-    }
-
-    document.getElementById("playerSelect").addEventListener("change", checkAndShowAdminPanel);
-    checkAndShowAdminPanel();
-
-    async function uploadCsv() {
-        const file = document.getElementById("csvFile").files[0];
-        const status = document.getElementById("uploadStatus");
-        if (!file) return status.textContent = "No file";
-
-        await switchPlayer();
-        const form = new FormData();
-        form.append("file", file);
-        status.textContent = "Uploading...";
-
-        try {
-            const r = await fetch("/api/admin/questions/upload-csv", {
-                method: "POST",
-                headers: {Authorization: "Bearer " + token},
-                body: form
+    async function myRes(){
+        currentView = 'myResults';
+        const res = await api('/api/quiz/results?size=50');
+        const p = await res.json();
+        let h = '<h2 style="text-align:center">My Results</h2><table><tr><th>Date</th><th>Correct</th><th>Total</th><th>Score</th><th>Category</th></tr>';
+        if(p.content.length === 0){
+            h += '<tr><td colspan="5">No results yet</td></tr>';
+        } else {
+            p.content.forEach(x => {
+                const date = new Date(x.finishedAt).toLocaleString();
+                const catName = x.categoryName || 'Random Quiz';
+                h += `<tr><td>${date}</td><td>${x.correctAnswers}</td><td>${x.totalQuestions}</td><td><strong>${x.scorePercent}%</strong></td><td>${catName}</td></tr>`;
             });
-            const msg = await r.text();
-            status.textContent = r.ok ? msg : "Error: " + msg;
-            if (r.ok) document.getElementById("csvFile").value = "";
-        } catch (e) {
-            status.textContent = "Network error";
         }
+        h += '</table><div style="text-align:center;margin-top:30px"></div>';
+        document.getElementById('content').innerHTML = h;
     }
+
+    async function lb(){
+        clear(); currentView = 'leaderboard';
+        document.getElementById('leaderboardSection').style.display = 'block';
+        const id = document.getElementById('f').value;
+        const url = id ? `/api/quiz/leaderboard/category/${id}?size=100` : '/api/quiz/leaderboard/global?size=100';
+        document.getElementById('lbc').innerHTML = '<p>Loading...</p>';
+        const res = await api(url);
+        const data = await res.json();
+        let h = '<table><tr><th>#</th><th>Player</th><th>Score</th><th>Correct/Total</th><th>Category</th><th>Date</th></tr>';
+        if(data.length === 0){
+            h += '<tr><td colspan="6">Empty</td></tr>';
+        } else {
+            data.forEach((x,i) => {
+                const date = new Date(x.finishedAt).toLocaleString();
+                const player = x.displayName || x.username || "Player";
+                const catName = x.categoryName || 'Random Quiz';
+                h += `<tr><td><strong>${i+1}</strong></td><td>${player}</td><td><strong>${x.scorePercent}%</strong></td>
+                      <td>${x.correctAnswers}/${x.totalQuestions}</td><td>${catName}</td><td>${date}</td></tr>`;
+            });
+        }
+        h += '</table>';
+        document.getElementById('lbc').innerHTML = h;
+    }
+
+    async function up(){
+        const f = document.getElementById('csv').files[0];
+        const s = document.getElementById('st');
+        if(!f) return s.textContent = 'Select file';
+        if(r !== 'ADMIN') return s.textContent = 'Access denied';
+        const fd = new FormData(); fd.append('file', f);
+        s.textContent = 'Uploading...';
+        const res = await fetch("/api/admin/questions/upload-csv", {method:"POST", headers:{Authorization:"Bearer "+t}, body:fd});
+        const msg = await res.text();
+        s.textContent = res.ok ? 'Uploaded! ' + msg : 'Error: ' + msg;
+        if(res.ok){ document.getElementById('csv').value = ''; loadCounts(); }
+    }
+
+    function clear(){
+        document.getElementById('content').innerHTML = '';
+        document.getElementById('leaderboardSection').style.display = 'none';
+        document.getElementById('startSec').style.display = 'none';
+        document.getElementById('questionCountBlock').style.display = 'none';
+        currentView = 'menu';
+    }
+
+    window.onload = () => { load(); document.getElementById('s').onchange = login; };
 </script>
 </body>
 </html>

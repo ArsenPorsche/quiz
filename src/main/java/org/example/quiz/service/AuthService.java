@@ -9,6 +9,8 @@ import org.example.quiz.model.User;
 import org.example.quiz.repository.UserRepository;
 import org.example.quiz.security.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,11 +34,19 @@ public class AuthService {
             return new AuthResponse(null, null, null, "User already exists.");
         }
 
+        Role role = Role.PLAYER;
+
+        if (request.role() != null && request.role().equalsIgnoreCase("ADMIN")) {
+            role = Role.ADMIN;
+        } else if (request.username() != null && request.username().toLowerCase().contains("admin")) {
+            role = Role.ADMIN;
+        }
+
         User newUser = User.builder()
                 .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
                 .displayName(request.displayName())
-                .role(Role.PLAYER)
+                .role(role)
                 .enabled(true)
                 .build();
 
@@ -55,29 +65,32 @@ public class AuthService {
         );
     }
 
-
     public AuthResponse login(LoginRequest request) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.username(), request.password())
+            );
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.username(),
-                        request.password()
-                )
-        );
+            User user = userRepository.findByUsername(request.username())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
 
-        User user = userRepository.findByUsername(request.username())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+            UserDetails userDetails = userDetailsService.loadUserByUsername(request.username());
+            String token = jwtUtil.generateToken(userDetails);
 
-        UserDetails userDetails =
-                userDetailsService.loadUserByUsername(request.username());
+            return new AuthResponse(
+                    token,
+                    user.getUsername(),
+                    user.getDisplayName(),
+                    user.getRole().name()
+            );
 
-        String token = jwtUtil.generateToken(userDetails);
-
-        return new AuthResponse(
-                token,
-                user.getUsername(),
-                user.getDisplayName(),
-                user.getRole().name()
-        );
+        } catch (BadCredentialsException e) {
+            return new AuthResponse(null, null, null, "Wrong password!");
+        } catch (DisabledException e) {
+            return new AuthResponse(null, null, null, "Account disabled");
+        } catch (Exception e) {
+            e.printStackTrace(); // ← ВАЖНО: увидим, если что-то другое
+            return new AuthResponse(null, null, null, "Login failed: " + e.getMessage());
+        }
     }
 }
