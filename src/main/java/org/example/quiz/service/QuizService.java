@@ -24,12 +24,13 @@ public class QuizService {
     private final QuizResultRepository quizResultRepository;
     private final UserRepository userRepository;
 
+    // Zwraca pytania do quizu (losowe, z kategorii lub bez)
     public List<QuizQuestionDto> startQuiz(Long categoryId, Integer questionsCount) {
         int count = questionsCount != null ? questionsCount : 10;
 
         List<Question> questions = categoryId == null
-                ? questionRepository.findRandom(count)
-                : questionRepository.findRandomByCategoryId(categoryId, count);
+                ? questionRepository.findRandom(count)// losowy quiz
+                : questionRepository.findRandomByCategoryId(categoryId, count);// z konkretnej kategorii
 
         return questions.stream()
                 .map(q -> new QuizQuestionDto(
@@ -43,13 +44,15 @@ public class QuizService {
                 .toList();
     }
 
-    @Transactional
+    // Liczy punkty i zapisuje wynik quizu
+    @Transactional// zapis do bazy – potrzebna transakcja zapisu
     public QuizResultDto submitQuiz(SubmitQuizRequest request, String username) {
         var userAnswers = request.answers();
         if (userAnswers.isEmpty()) {
             throw new IllegalArgumentException("No answers provided");
         }
 
+        // Pobieramy pytania z bazy po ID
         var questionMap = questionRepository.findAllById(
                 userAnswers.stream().map(SubmitQuizRequest.UserAnswer::questionId).toList()
         ).stream().collect(java.util.stream.Collectors.toMap(Question::getId, q -> q));
@@ -71,6 +74,7 @@ public class QuizService {
         String categoryName = "Random Quiz";
         Long categoryId = null;
 
+        // Jeśli była wybrana kategoria – pobieramy jej nazwę
         if (request.categoryId() != null) {
             categoryId = request.categoryId();
             categoryName = questionMap.values().stream()
@@ -80,6 +84,7 @@ public class QuizService {
                     .orElse("Unknown Category");
         }
 
+        // Zapis wyniku do bazy
         QuizResult result = QuizResult.builder()
                 .user(user)
                 .categoryId(categoryId)
@@ -92,6 +97,7 @@ public class QuizService {
 
         quizResultRepository.save(result);
 
+        // Zwracamy wynik do frontendu
         return new QuizResultDto(
                 total,
                 correct,
@@ -103,6 +109,7 @@ public class QuizService {
         );
     }
 
+    // Moje wyniki (dla zalogowanego gracza)
     public Page<QuizResultDto> getMyResults(String username, int page, int size) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -121,6 +128,7 @@ public class QuizService {
         ));
     }
 
+    // Globalny ranking – wszystkie kategorie razem
     public List<LeaderboardEntry> getGlobalLeaderboard(int size) {
         return quizResultRepository.findGlobalLeaderboardNative(PageRequest.of(0, size))
                 .getContent()
@@ -129,6 +137,7 @@ public class QuizService {
                 .toList();
     }
 
+    // Ranking w konkretnej kategorii
     public List<LeaderboardEntry> getCategoryLeaderboard(Long categoryId, int size) {
         return quizResultRepository.findCategoryLeaderboardNative(categoryId, PageRequest.of(0, size))
                 .getContent()
@@ -137,6 +146,7 @@ public class QuizService {
                 .toList();
     }
 
+    // Konwertuje wiersz z zapytania SQL na obiekt LeaderboardEntry
     private LeaderboardEntry toLeaderboardEntry(Object[] row) {
         LocalDateTime finishedAt = row[6] instanceof java.sql.Timestamp ts
                 ? ts.toLocalDateTime()
@@ -145,10 +155,10 @@ public class QuizService {
         String category = row[5] != null ? (String) row[5] : "Random Quiz";
 
         return new LeaderboardEntry(
-                (String) row[1],
-                ((Number) row[2]).intValue(),
-                ((Number) row[3]).intValue(),
-                ((Number) row[4]).intValue(),
+                (String) row[1], // displayName
+                ((Number) row[2]).intValue(), // scorePercent
+                ((Number) row[3]).intValue(), // correctAnswers
+                ((Number) row[4]).intValue(), // totalQuestions
                 category,
                 finishedAt
         );

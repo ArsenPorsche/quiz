@@ -23,11 +23,13 @@ public class QuizController {
     private final QuizService quizService;
     private final QuestionRepository questionRepository;
 
+    // Rozpoczęcie quizu – zwraca listę pytań
     @PostMapping("/start")
     public List<QuizQuestionDto> startQuiz(@RequestBody StartQuizRequest request) {
         return quizService.startQuiz(request.categoryId(), request.questionsCount());
     }
 
+    // Zakończenie quizu – przyjmuje odpowiedzi i zapisuje wynik
     @PostMapping("/submit")
     public QuizResultDto submitQuiz(@RequestBody SubmitQuizRequest request,
                                     Authentication authentication) {
@@ -37,6 +39,7 @@ public class QuizController {
         return quizService.submitQuiz(request, authentication.getName());
     }
 
+    // Moje wyniki – tylko dla zalogowanego gracza
     @GetMapping("/results")
     public Page<QuizResultDto> getMyResults(
             @RequestParam(defaultValue = "0") int page,
@@ -49,12 +52,13 @@ public class QuizController {
         return quizService.getMyResults(auth.getName(), page, size);
     }
 
-
+    // Globalny ranking – wszystkie kategorie razem
     @GetMapping("/leaderboard/global")
     public List<LeaderboardEntry> getGlobalLeaderboard(@RequestParam(defaultValue = "20") int size) {
         return quizService.getGlobalLeaderboard(size);
     }
 
+    // Ranking w konkretnej kategorii
     @GetMapping("/leaderboard/category/{categoryId}")
     public List<LeaderboardEntry> getCategoryLeaderboard(
             @PathVariable Long categoryId,
@@ -62,6 +66,7 @@ public class QuizController {
         return quizService.getCategoryLeaderboard(categoryId, size);
     }
 
+    // Ilość pytań w każdej kategorii + ogółem (do wyboru liczby pytań)
     @GetMapping("/questions/counts")
     public ResponseEntity<Map<String, Integer>> getQuestionCounts() {
         Map<String, Integer> counts = new HashMap<>();
