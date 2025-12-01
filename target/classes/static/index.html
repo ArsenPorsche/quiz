@@ -10,26 +10,44 @@
         .c{max-width:900px;margin:0 auto;padding:20px}
         h1{text-align:center;font-size:3.5em;margin:30px 0 10px;color:var(--p)}
         .ps{text-align:center;margin:40px 0;font-size:1.4em}
-        select,button,input[type=number]{padding:14px 20px;margin:8px;font-size:17px;border:2px solid var(--p);border-radius:10px;background:white}
-        button{background:var(--p);color:white;cursor:pointer;transition:.3s;font-weight:bold}
+        select,button,input[type=number]{
+            padding:14px 20px;margin:8px;font-size:17px;border:2px solid var(--p);
+            border-radius:10px;background:white
+        }
+        button{
+            background:var(--p);color:white;cursor:pointer;transition:.3s;font-weight:bold
+        }
         button:hover{background:#333;transform:translateY(-2px)}
-        .cat{display:inline-block;margin:15px;padding:22px 35px;background:white;border:3px solid var(--p);border-radius:16px;cursor:pointer;font-size:1.4em;min-width:220px;text-align:center;box-shadow:0 6px 12px rgba(0,0,0,.15);transition:all .3s}
+        .cat{
+            display:inline-block;margin:15px;padding:22px 35px;background:white;
+            border:3px solid var(--p);border-radius:16px;cursor:pointer;font-size:1.4em;
+            min-width:220px;text-align:center;box-shadow:0 6px 12px rgba(0,0,0,.15);transition:all .3s
+        }
         .cat:hover{background:#f0f0f0;transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,.2)}
-
-        #adminPanel{background:white;border:3px solid var(--p);padding:40px;border-radius:16px;text-align:center;margin:60px 0;display:none;box-shadow:0 8px 25px rgba(0,0,0,.1)}
-        #adminPanel h2{color:var(--p);margin-top:0}
-
+        #adminPanel{
+            background:white;border:3px solid var(--p);padding:40px;border-radius:16px;
+            text-align:center;margin:60px 0;display:none;box-shadow:0 8px 25px rgba(0,0,0,.1)
+        }
         #playerPanel{display:none}
-        #questionCountBlock{display:none;text-align:center;margin:35px 0;padding:25px;background:#f9f9f9;border-radius:16px;border:2px dashed #ccc}
+        #questionCountBlock{
+            display:none;text-align:center;margin:40px 0;padding:25px;background:#f9f9f9;
+            border-radius:16px;border:2px dashed #ccc
+        }
         #startSec{display:none;text-align:center;margin:50px 0}
-        #startBtn{font-size:28px;padding:25px 80px;background:var(--g);border:none;border-radius:20px;font-weight:bold;box-shadow:0 8px 20px rgba(46,139,87,.4);transition:all .3s;cursor:pointer}
+        #startBtn{
+            font-size:28px;padding:25px 80px;background:var(--g);border:none;
+            border-radius:20px;font-weight:bold;box-shadow:0 8px 20px rgba(46,139,87,.4);
+            transition:all .3s;cursor:pointer
+        }
         #startBtn:hover{background:#256d45;transform:scale(1.08)}
-
-        #leaderboardSection{display:none;margin-top:80px;background:white;padding:30px;border-radius:16px;border:2px solid #ddd}
+        .board{
+            display:none;margin:60px 0;background:white;padding:30px;
+            border-radius:16px;border:2px solid #ddd;box-shadow:0 8px 25px rgba(0,0,0,.1)
+        }
         table{width:100%;border-collapse:collapse;margin:30px 0;font-size:1.2em}
         th,td{border:1px solid var(--p);padding:16px;text-align:center}
         th{background:var(--p);color:white}
-        .result-box{background:#f9f9f9;padding:70px;border-radius:20px;border:5px solid var(--p);text-align:center;margin:50px 0}
+        .result-box{background:#f9f9;padding:70px;border-radius:20px;border:5px solid var(--p);text-align:center;margin:50px 0}
         .big-score{font-size:80px;font-weight:bold;margin:40px 0}
     </style>
 </head>
@@ -43,9 +61,10 @@
         <span id="u" style="margin-left:20px;font-weight:bold;color:var(--g);font-size:1.3em;"></span>
     </div>
 
+    <!-- Panel gracza -->
     <div id="playerPanel">
         <div style="text-align:center;margin:40px 0">
-            <div class="cat" onclick="sel(null)">Random Quiz<br></div>
+            <div class="cat" onclick="sel(null)">Random Quiz</div>
             <div class="cat" onclick="sel(1)">Math</div>
             <div class="cat" onclick="sel(2)">Movies</div>
             <div class="cat" onclick="sel(3)">Science</div>
@@ -58,6 +77,7 @@
             <button onclick="lb()">Global Leaderboard</button>
         </div>
 
+        <!-- Wybór liczby pytań – jak wcześniej, klasycznie -->
         <div id="questionCountBlock">
             <strong>How many questions?</strong><br><br>
             <input type="number" id="cnt" min="1" value="10" style="width:140px;text-align:center;font-size:1.5em">
@@ -65,34 +85,46 @@
         </div>
 
         <div id="startSec">
-            <p style="font-size:1.6em;margin:40px 0">
-                Ready to start <strong style="color:var(--g)" id="catName">quiz</strong><br>
+            <p style="font-size:1.8em;margin:40px 0">
+                Ready to start <strong style="color:var(--g)" id="catName">quiz</strong>?<br>
                 with <strong id="qCount">10</strong> questions?
             </p>
             <button id="startBtn" onclick="startQuiz()">START QUIZ</button>
         </div>
     </div>
 
+    <!-- Panel administratora -->
     <div id="adminPanel">
         <h2>Admin Zone</h2>
         <p><strong>Upload questions (CSV)</strong></p>
         <input type="file" id="csv" accept=".csv">
         <button onclick="up()">Upload CSV</button>
         <span id="st" style="margin-left:15px;font-weight:bold;color:var(--g)"></span>
-        <div style="margin-top:40px">
-            <button onclick="lb()" style="font-size:18px;padding:15px 40px">Global Leaderboard</button>
-        </div>
     </div>
 
-    <div id="leaderboardSection">
-        <h2>Global Leaderboard</h2>
-        <div style="text-align:center;margin:30px 0">
+    <!-- Moje wyniki – styl jak globalny ranking -->
+    <div id="myResultsSection" class="board">
+        <h2 style="text-align:center">My Results</h2>
+        <div style="text-align:center;margin:20px 0">
+            <button onclick="hideBoards()">Close</button>
+        </div>
+        <div id="myResultsContent"></div>
+    </div>
+
+    <!-- Globalny ranking z działającym Random Quiz -->
+    <div id="leaderboardSection" class="board">
+        <h2 style="text-align:center">Global Leaderboard</h2>
+        <div style="text-align:center;margin:20px 0">
             <select id="f" onchange="lb()">
                 <option value="">All Categories</option>
-                <option value="1">Math</option><option value="2">Movies</option><option value="3">Science</option>
-                <option value="4">General Knowledge</option><option value="5">Programming</option>
+                <option value="random">Random Quiz</option>
+                <option value="1">Math</option>
+                <option value="2">Movies</option>
+                <option value="3">Science</option>
+                <option value="4">General Knowledge</option>
+                <option value="5">Programming</option>
             </select>
-            <button onclick="document.getElementById('leaderboardSection').style.display='none'">Close</button>
+            <button onclick="hideBoards()">Close</button>
         </div>
         <div id="lbc"></div>
     </div>
@@ -104,162 +136,207 @@
     let t='', r='', qs=[], cat=null, cnts={total:50}, currentView='menu';
     const names=["","Math","Movies","Science","General Knowledge","Programming"];
 
-    async function api(u,o={}){
-        const h={'Content-Type':'application/json',...o.headers};
-        if(t) h.Authorization='Bearer '+t;
-        return fetch(u,{...o,headers:h});
+    // Bezpieczne wyświetlanie tekstu (przeciw XSS)
+    function e(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;')
+            .replace(/'/g,'&#39;');
     }
 
-    async function load(){
-        const s=document.getElementById('s');
-        s.innerHTML='<option>Loading...</option>'; s.disabled=true;
-        try{
-            const res=await fetch('/api/auth/players');
-            if(res.ok){
-                const p=await res.json();
-                s.innerHTML='<option value="">— Select player —</option>';
-                p.forEach(x=>{const o=document.createElement('option');o.value=x.username;o.textContent=x.displayName+(x.role==='ADMIN'?' (Admin)':"");s.appendChild(o)});
+    // Zapytanie do API z tokenem
+    async function api(u, o={}) {
+        const h = {'Content-Type':'application/json', ...o.headers};
+        if (t) h.Authorization = 'Bearer ' + t;
+        return fetch(u, {...o, headers:h});
+    }
+
+    // Ładowanie listy graczy przy starcie
+    async function load() {
+        const s = document.getElementById('s');
+        s.innerHTML = '<option>Loading...</option>'; s.disabled = true;
+        try {
+            const res = await fetch('/api/auth/players');
+            if (res.ok) {
+                const p = await res.json();
+                s.innerHTML = '<option value="">— Select player —</option>';
+                p.forEach(x => {
+                    const o = document.createElement('option');
+                    o.value = x.username;
+                    o.textContent = x.displayName + (x.role==='ADMIN' ? ' (Admin)' : '');
+                    s.appendChild(o);
+                });
             }
-        }catch{ s.innerHTML='<option>Server offline</option>'; }
-        s.disabled=false;
+        } catch { s.innerHTML = '<option>Server offline</option>'; }
+        s.disabled = false;
     }
 
-    async function login(){
-        const u=document.getElementById('s').value;
-        if(!u){ logout(); return; }
-        const p=prompt(`Password for ${u}:`);
-        if(!p){ document.getElementById('s').value=''; logout(); return; }
-        try{
-            const res=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
-            if(!res.ok){ alert('Wrong password!'); document.getElementById('s').value=''; logout(); return; }
-            const d=await res.json();
-            t=d.token; r=d.role || 'PLAYER';
-            document.getElementById('u').textContent=`— ${d.displayName}`;
-            document.getElementById('playerPanel').style.display = r==='ADMIN' ? 'none' : 'block';
-            document.getElementById('adminPanel').style.display = r==='ADMIN' ? 'block' : 'none';
-            document.getElementById('questionCountBlock').style.display='none';
-            document.getElementById('startSec').style.display='none';
+    // Logowanie po wyborze gracza
+    async function login() {
+        const u = document.getElementById('s').value;
+        if (!u) { logout(); return; }
+        const p = prompt(`Password for ${u}:`);
+        if (!p) { document.getElementById('s').value=''; logout(); return; }
+        try {
+            const res = await fetch('/api/auth/login', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({username:u,password:p})
+            });
+            if (!res.ok) { alert('Wrong password!'); document.getElementById('s').value=''; logout(); return; }
+            const d = await res.json();
+            t = d.token; r = d.role || 'PLAYER';
+            document.getElementById('u').textContent = `— ${d.displayName}`;
+            document.getElementById('playerPanel').style.display = r==='ADMIN'?'none':'block';
+            document.getElementById('adminPanel').style.display = r==='ADMIN'?'block':'none';
             clear();
-            if(r!=='ADMIN') await loadCounts();
-            if(currentView === 'myResults') myRes();
-        }catch{ alert('Login error'); logout(); }
+            if (r!=='ADMIN') await loadCounts();
+        } catch { alert('Login error'); logout(); }
     }
 
-    function logout(){
+    // Wylogowanie
+    function logout() {
         t=''; r=''; cat=null;
         document.getElementById('u').textContent='';
         document.getElementById('playerPanel').style.display='none';
         document.getElementById('adminPanel').style.display='none';
-        document.getElementById('questionCountBlock').style.display='none';
-        document.getElementById('startSec').style.display='none';
-        clear();
+        hideBoards(); clear();
     }
 
-    async function loadCounts(){
-        try{
-            const res=await api('/api/quiz/questions/counts');
-            if(res.ok) cnts=await res.json();
-        }catch(e){console.warn(e)}
+    // Pobieranie liczby pytań w kategoriach
+    async function loadCounts() {
+        try {
+            const res = await api('/api/quiz/questions/counts');
+            if (res.ok) cnts = await res.json();
+        } catch(e) { console.warn(e); }
     }
 
-    function sel(id){
-        if(r==='ADMIN') return;
+    // Wybór kategorii
+    function sel(id) {
+        if (r==='ADMIN') return;
         cat = id;
         document.getElementById('catName').textContent = id ? names[id] : 'Random Quiz';
-        document.getElementById('qCount').textContent = document.getElementById('cnt').value || 10;
 
-        const max = id ? (cnts[id] || 10) : (cnts.total || 50);
+        const max = id ? (cnts[id]||10) : (cnts.total||50);
         document.getElementById('cnt').max = max;
-        if(+document.getElementById('cnt').value > max) document.getElementById('cnt').value = max;
-        document.getElementById('hint').textContent = `(max: ${max} questions)`;
+        if (+document.getElementById('cnt').value > max) document.getElementById('cnt').value = max;
+        document.getElementById('hint').textContent = `(max: ${max})`;
+        document.getElementById('qCount').textContent = document.getElementById('cnt').value;
 
         document.getElementById('questionCountBlock').style.display = 'block';
         document.getElementById('startSec').style.display = 'block';
     }
 
-    async function startQuiz(){
+    // Rozpoczęcie quizu
+    async function startQuiz() {
         const n = +document.getElementById('cnt').value || 10;
-        const max = cat ? (cnts[cat] || 10) : (cnts.total || 50);
-        if(n < 1 || n > max){ alert(`Enter 1–${max}`); return; }
-        const res = await api('/api/quiz/start', {
-            method: 'POST',
-            body: JSON.stringify({categoryId: cat, questionsCount: n})
-        });
-        if(!res.ok){ alert('Failed to load questions'); return; }
+        const max = cat===null ? (cnts.total||50) : (cnts[cat]||10);
+        if (n<1 || n>max) { alert(`Enter 1–${max}`); return; }
+
+        const payload = cat===null ? {questionsCount:n} : {categoryId:cat, questionsCount:n};
+        const res = await api('/api/quiz/start', {method:'POST', body:JSON.stringify(payload)});
+        if (!res.ok) { alert('Failed to load questions'); return; }
         qs = await res.json();
+        if (qs.length===0) { alert('No questions!'); return; }
         renderQuiz();
     }
 
-    function renderQuiz(){
-        const title = cat ? names[cat] : 'Random Quiz';
+    // Renderowanie pytań quizu
+    function renderQuiz() {
+        const title = cat===null ? 'Random Quiz' : names[cat];
         let h = `<h2 style="text-align:center;margin:40px 0">${title}<br><small>${qs.length} questions</small></h2>`;
         qs.forEach((q,i) => {
             h += `<div style="background:#f9f9f9;padding:30px;margin:35px 0;border-radius:16px">
-                <p><strong>${i+1}. ${q.text}</strong></p>
-                <label><input type="radio" name="q${q.id}" value="A"> A) ${q.optionA}</label><br>
-                <label><input type="radio" name="q${q.id}" value="B"> B) ${q.optionB}</label><br>
-                <label><input type="radio" name="q${q.id}" value="C"> C) ${q.optionC}</label><br>
-                <label><input type="radio" name="q${q.id}" value="D"> D) ${q.optionD}</label>
+                <p><strong>${i+1}. ${e(q.text)}</strong></p>
+                <label><input type="radio" name="q${q.id}" value="A"> A) ${e(q.optionA)}</label><br>
+                <label><input type="radio" name="q${q.id}" value="B"> B) ${e(q.optionB)}</label><br>
+                <label><input type="radio" name="q${q.id}" value="C"> C) ${e(q.optionC)}</label><br>
+                <label><input type="radio" name="q${q.id}" value="D"> D) ${e(q.optionD)}</label>
             </div>`;
         });
-        h += `<div style="text-align:center;margin:50px"><button onclick="submitAnswers()" style="font-size:24px;padding:20px 70px">Submit Answers</button></div>`;
+        h += `<div style="text-align:center;margin:80px 0">
+                <button onclick="submitAnswers()" style="font-size:26px;padding:22px 90px;background:var(--g);border:none;border-radius:20px;color:white">
+                    Submit Answers
+                </button>
+              </div>`;
         document.getElementById('content').innerHTML = h;
-        document.getElementById('startSec').style.display = 'none';
-        document.getElementById('questionCountBlock').style.display = 'none';
+        document.getElementById('questionCountBlock').style.display='none';
+        document.getElementById('startSec').style.display='none';
     }
 
-    window.submitAnswers = async function(){
-        const answers = qs.map(q => ({
-            questionId: q.id,
-            selectedAnswer: document.querySelector(`input[name="q${q.id}"]:checked`)?.value || null
-        })).filter(x => x.selectedAnswer);
-        if(!answers.length){ alert('Answer at least one!'); return; }
-        const res = await api('/api/quiz/submit', {
-            method: 'POST',
-            body: JSON.stringify({answers, categoryId: cat})
-        });
+    // Wysyłanie odpowiedzi
+    window.submitAnswers = async function() {
+        const answers = [];
+        for (const q of qs) {
+            const sel = document.querySelector(`input[name="q${q.id}"]:checked`);
+            if (sel) answers.push({questionId:q.id, selectedAnswer:sel.value});
+        }
+        if (answers.length===0) { alert('Answer at least one question!'); return; }
+
+        const payload = {answers};
+        if (cat!==null) payload.categoryId = cat;
+
+        const res = await api('/api/quiz/submit', {method:'POST', body:JSON.stringify(payload)});
         const d = await res.json();
-        const color = d.scorePercent >= 80 ? '#2e8b57' : d.scorePercent >= 50 ? 'orange' : 'var(--r)';
+        const color = d.scorePercent>=80 ? '#2e8b57' : d.scorePercent>=50 ? 'orange' : 'var(--r)';
+
         document.getElementById('content').innerHTML = `
             <div class="result-box">
                 <h2>Quiz Finished!</h2>
                 <p style="font-size:1.8em">Correct: <strong>${d.correctAnswers}/${d.totalQuestions}</strong></p>
                 <div class="big-score" style="color:${color}">${d.scorePercent}%</div>
             </div>`;
-        currentView = 'result';
+    };
+
+    // Zamykanie okien rankingów
+    function hideBoards() {
+        document.getElementById('myResultsSection').style.display='none';
+        document.getElementById('leaderboardSection').style.display='none';
     }
 
-    async function myRes(){
+    // Moje wyniki
+    async function myRes() {
         currentView = 'myResults';
-        const res = await api('/api/quiz/results?size=50');
-        const p = await res.json();
-        let h = '<h2 style="text-align:center">My Results</h2><table><tr><th>Date</th><th>Correct</th><th>Total</th><th>Score</th><th>Category</th></tr>';
-        if(p.content.length === 0){
-            h += '<tr><td colspan="5">No results yet</td></tr>';
-        } else {
-            p.content.forEach(x => {
-                const date = new Date(x.finishedAt).toLocaleString();
-                const catName = x.categoryName || 'Random Quiz';
-                h += `<tr><td>${date}</td><td>${x.correctAnswers}</td><td>${x.totalQuestions}</td><td><strong>${x.scorePercent}%</strong></td><td>${catName}</td></tr>`;
-            });
-        }
-        h += '</table><div style="text-align:center;margin-top:30px"></div>';
-        document.getElementById('content').innerHTML = h;
+        document.getElementById('myResultsSection').style.display = 'block';
+        document.getElementById('myResultsContent').innerHTML = '<p>Loading...</p>';
+
+        const res = await api('/api/quiz/results?size=100');
+        const data = await res.json();
+        const results = data.content || [];
+
+        let h = '<table><tr><th>#</th><th>Date</th><th>Score</th><th>Correct/Total</th><th>Category</th></tr>';
+        if (results.length===0) h += '<tr><td colspan="5">No results yet</td></tr>';
+        else results.forEach((x,i) => {
+            const date = new Date(x.finishedAt).toLocaleString();
+            const catName = x.categoryName || 'Random Quiz';
+            h += `<tr><td><strong>${i+1}</strong></td><td>${date}</td><td><strong>${x.scorePercent}%</strong></td><td>${x.correctAnswers}/${x.totalQuestions}</td><td>${catName}</td></tr>`;
+        });
+        h += '</table>';
+        document.getElementById('myResultsContent').innerHTML = h;
     }
 
-    async function lb(){
-        clear(); currentView = 'leaderboard';
+    // Globalny ranking – Random Quiz działa!
+    async function lb() {
+        hideBoards();
+        currentView = 'leaderboard';
         document.getElementById('leaderboardSection').style.display = 'block';
-        const id = document.getElementById('f').value;
-        const url = id ? `/api/quiz/leaderboard/category/${id}?size=100` : '/api/quiz/leaderboard/global?size=100';
+        const filter = document.getElementById('f').value;
+
+        let url = '/api/quiz/leaderboard/global?size=100';
+        if (filter && filter !== 'random') url = `/api/quiz/leaderboard/category/${filter}?size=100`;
+
         document.getElementById('lbc').innerHTML = '<p>Loading...</p>';
         const res = await api(url);
         const data = await res.json();
+
         let h = '<table><tr><th>#</th><th>Player</th><th>Score</th><th>Correct/Total</th><th>Category</th><th>Date</th></tr>';
-        if(data.length === 0){
-            h += '<tr><td colspan="6">Empty</td></tr>';
-        } else {
+        if (data.length===0) h += '<tr><td colspan="6">No results</td></tr>';
+        else {
             data.forEach((x,i) => {
+                if (filter==='random' && (x.categoryName||'Random Quiz')!=='Random Quiz') return;
                 const date = new Date(x.finishedAt).toLocaleString();
                 const player = x.displayName || x.username || "Player";
                 const catName = x.categoryName || 'Random Quiz';
@@ -271,28 +348,34 @@
         document.getElementById('lbc').innerHTML = h;
     }
 
-    async function up(){
+    // Wgrywanie pytań przez admina
+    async function up() {
         const f = document.getElementById('csv').files[0];
         const s = document.getElementById('st');
-        if(!f) return s.textContent = 'Select file';
-        if(r !== 'ADMIN') return s.textContent = 'Access denied';
-        const fd = new FormData(); fd.append('file', f);
-        s.textContent = 'Uploading...';
-        const res = await fetch("/api/admin/questions/upload-csv", {method:"POST", headers:{Authorization:"Bearer "+t}, body:fd});
+        if (!f) return s.textContent='Select file';
+        if (r!=='ADMIN') return s.textContent='Access denied';
+        const fd = new FormData(); fd.append('file',f);
+        s.textContent='Uploading...';
+        const res = await fetch("/api/admin/questions/upload-csv", {method:"POST",headers:{Authorization:"Bearer "+t},body:fd});
         const msg = await res.text();
-        s.textContent = res.ok ? 'Uploaded! ' + msg : 'Error: ' + msg;
-        if(res.ok){ document.getElementById('csv').value = ''; loadCounts(); }
+        s.textContent = res.ok ? 'Uploaded! '+msg : 'Error: '+msg;
+        if (res.ok) { document.getElementById('csv').value=''; loadCounts(); }
     }
 
-    function clear(){
-        document.getElementById('content').innerHTML = '';
-        document.getElementById('leaderboardSection').style.display = 'none';
-        document.getElementById('startSec').style.display = 'none';
-        document.getElementById('questionCountBlock').style.display = 'none';
-        currentView = 'menu';
+    // Czyszczenie ekranu
+    function clear() {
+        document.getElementById('content').innerHTML='';
+        hideBoards();
+        document.getElementById('questionCountBlock').style.display='none';
+        document.getElementById('startSec').style.display='none';
+        currentView='menu';
     }
 
-    window.onload = () => { load(); document.getElementById('s').onchange = login; };
+    // Start aplikacji
+    window.onload = () => {
+        load();
+        document.getElementById('s').onchange = login;
+    };
 </script>
 </body>
 </html>
