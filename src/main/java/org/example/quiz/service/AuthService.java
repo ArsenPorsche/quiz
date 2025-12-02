@@ -38,8 +38,6 @@ public class AuthService {
 
         if (request.role() != null && request.role().equalsIgnoreCase("ADMIN")) {
             role = Role.ADMIN;
-        } else if (request.username() != null && request.username().toLowerCase().contains("admin")) {
-            role = Role.ADMIN;
         }
 
         User newUser = User.builder()
@@ -89,7 +87,6 @@ public class AuthService {
         } catch (DisabledException e) {
             return new AuthResponse(null, null, null, "Account disabled");
         } catch (Exception e) {
-            e.printStackTrace(); // ← ВАЖНО: увидим, если что-то другое
             return new AuthResponse(null, null, null, "Login failed: " + e.getMessage());
         }
     }

@@ -14,18 +14,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-
+// Serwis administracyjny pytan
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AdminQuestionService {
 
+    // Repo pytan
     private final QuestionRepository questionRepository;
+    // Repo kategorii
     private final CategoryRepository categoryRepository;
 
-
+    // Tworzy nowe pytanie
     public QuestionResponse createQuestion(QuestionRequest request) {
         Category category = categoryRepository.findById(request.categoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));
@@ -44,14 +45,14 @@ public class AdminQuestionService {
         return toResponse(saved);
     }
 
-
+    // Masowy upload pytan z CSV
     public int uploadCsv(MultipartFile file) {
         List<Question> toSave = CsvUtils.parseQuestions(file, categoryRepository);
         List<Question> saved = questionRepository.saveAll(toSave);
         return saved.size();
     }
 
-
+    // Aktualizacja istniejacego pytania
     public QuestionResponse update(Long id, QuestionRequest request) {
         return questionRepository.findById(id)
                 .map(q -> {
@@ -72,14 +73,14 @@ public class AdminQuestionService {
                 .orElse(null);
     }
 
-
+    // Usuwa pytanie
     public boolean delete(Long id) {
         if (!questionRepository.existsById(id)) return false;
         questionRepository.deleteById(id);
         return true;
     }
 
-
+    // Losowe pytania (tasowanie w pamieci)
     public List<QuestionResponse> random(int count) {
         List<Question> all = questionRepository.findAll();
         if (all.isEmpty()) return Collections.emptyList();
@@ -90,7 +91,7 @@ public class AdminQuestionService {
         return chosen.stream().map(this::toResponse).toList();
     }
 
-
+    // Lista pytan z opcjonalnym filtrem kategorii
     public List<QuestionResponse> list(Long categoryId) {
 
         List<Question> all = questionRepository.findAll();
@@ -104,7 +105,7 @@ public class AdminQuestionService {
         return filtered.stream().map(this::toResponse).toList();
     }
 
-
+    // Konwersja encji na DTO
     private QuestionResponse toResponse(Question q) {
         return new QuestionResponse(
                 q.getId(),
