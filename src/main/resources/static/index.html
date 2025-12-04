@@ -61,7 +61,6 @@
         <span id="u" style="margin-left:20px;font-weight:bold;color:var(--g);font-size:1.3em;"></span>
     </div>
 
-    <!-- Panel gracza -->
     <div id="playerPanel">
         <div style="text-align:center;margin:40px 0">
             <div class="cat" onclick="sel(null)">Random Quiz</div>
@@ -77,7 +76,6 @@
             <button onclick="lb()">Global Leaderboard</button>
         </div>
 
-        <!-- Wybór liczby pytań – jak wcześniej, klasycznie -->
         <div id="questionCountBlock">
             <strong>How many questions?</strong><br><br>
             <input type="number" id="cnt" min="1" value="10" style="width:140px;text-align:center;font-size:1.5em">
@@ -93,7 +91,6 @@
         </div>
     </div>
 
-    <!-- Panel administratora -->
     <div id="adminPanel">
         <h2>Admin Zone</h2>
         <p><strong>Upload questions (CSV)</strong></p>
@@ -102,7 +99,6 @@
         <span id="st" style="margin-left:15px;font-weight:bold;color:var(--g)"></span>
     </div>
 
-    <!-- Moje wyniki – styl jak globalny ranking -->
     <div id="myResultsSection" class="board">
         <h2 style="text-align:center">My Results</h2>
         <div style="text-align:center;margin:20px 0">
@@ -111,7 +107,6 @@
         <div id="myResultsContent"></div>
     </div>
 
-    <!-- Globalny ranking z działającym Random Quiz -->
     <div id="leaderboardSection" class="board">
         <h2 style="text-align:center">Global Leaderboard</h2>
         <div style="text-align:center;margin:20px 0">
@@ -136,7 +131,6 @@
     let t='', r='', qs=[], cat=null, cnts={total:50}, currentView='menu';
     const names=["","Math","Movies","Science","General Knowledge","Programming"];
 
-    // Bezpieczne wyświetlanie tekstu (przeciw XSS)
     function e(str) {
         if (!str) return '';
         return String(str)
@@ -147,14 +141,12 @@
             .replace(/'/g,'&#39;');
     }
 
-    // Zapytanie do API z tokenem
     async function api(u, o={}) {
         const h = {'Content-Type':'application/json', ...o.headers};
         if (t) h.Authorization = 'Bearer ' + t;
         return fetch(u, {...o, headers:h});
     }
 
-    // Ładowanie listy graczy przy starcie
     async function load() {
         const s = document.getElementById('s');
         s.innerHTML = '<option>Loading...</option>'; s.disabled = true;
@@ -174,7 +166,6 @@
         s.disabled = false;
     }
 
-    // Logowanie po wyborze gracza
     async function login() {
         const u = document.getElementById('s').value;
         if (!u) { logout(); return; }
@@ -197,7 +188,6 @@
         } catch { alert('Login error'); logout(); }
     }
 
-    // Wylogowanie
     function logout() {
         t=''; r=''; cat=null;
         document.getElementById('u').textContent='';
@@ -206,7 +196,6 @@
         hideBoards(); clear();
     }
 
-    // Pobieranie liczby pytań w kategoriach
     async function loadCounts() {
         try {
             const res = await api('/api/quiz/questions/counts');
@@ -214,7 +203,6 @@
         } catch(e) { console.warn(e); }
     }
 
-    // Wybór kategorii
     function sel(id) {
         if (r==='ADMIN') return;
         cat = id;
@@ -230,7 +218,6 @@
         document.getElementById('startSec').style.display = 'block';
     }
 
-    // Rozpoczęcie quizu
     async function startQuiz() {
         const n = +document.getElementById('cnt').value || 10;
         const max = cat===null ? (cnts.total||50) : (cnts[cat]||10);
@@ -244,7 +231,6 @@
         renderQuiz();
     }
 
-    // Renderowanie pytań quizu
     function renderQuiz() {
         const title = cat===null ? 'Random Quiz' : names[cat];
         let h = `<h2 style="text-align:center;margin:40px 0">${title}<br><small>${qs.length} questions</small></h2>`;
@@ -267,7 +253,6 @@
         document.getElementById('startSec').style.display='none';
     }
 
-    // Wysyłanie odpowiedzi
     window.submitAnswers = async function() {
         const answers = [];
         for (const q of qs) {
@@ -291,13 +276,11 @@
             </div>`;
     };
 
-    // Zamykanie okien rankingów
     function hideBoards() {
         document.getElementById('myResultsSection').style.display='none';
         document.getElementById('leaderboardSection').style.display='none';
     }
 
-    // Moje wyniki
     async function myRes() {
         currentView = 'myResults';
         document.getElementById('myResultsSection').style.display = 'block';
@@ -318,7 +301,6 @@
         document.getElementById('myResultsContent').innerHTML = h;
     }
 
-    // Globalny ranking – Random Quiz działa!
     async function lb() {
         hideBoards();
         currentView = 'leaderboard';
@@ -348,7 +330,6 @@
         document.getElementById('lbc').innerHTML = h;
     }
 
-    // Wgrywanie pytań przez admina
     async function up() {
         const f = document.getElementById('csv').files[0];
         const s = document.getElementById('st');
@@ -362,7 +343,6 @@
         if (res.ok) { document.getElementById('csv').value=''; loadCounts(); }
     }
 
-    // Czyszczenie ekranu
     function clear() {
         document.getElementById('content').innerHTML='';
         hideBoards();
@@ -371,7 +351,6 @@
         currentView='menu';
     }
 
-    // Start aplikacji
     window.onload = () => {
         load();
         document.getElementById('s').onchange = login;

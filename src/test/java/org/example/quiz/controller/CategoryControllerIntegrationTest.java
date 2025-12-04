@@ -17,28 +17,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// Test integracyjny kontrolera kategorii
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class CategoryControllerIntegrationTest {
 
-    // MockMvc do wykonywania zapytan HTTP
     @Autowired
     MockMvc mockMvc;
 
-    // Repo kategorii
     @Autowired
     CategoryRepository categoryRepository;
 
-    // Repo pytan
     @Autowired
     QuestionRepository questionRepository;
 
-    // Przygotowanie danych przed kazdym testem
     @BeforeEach
     void setUp() {
-        questionRepository.deleteAll();
-        categoryRepository.deleteAll();
+//        questionRepository.deleteAll();
+//        categoryRepository.deleteAll();
 
         Category math = categoryRepository.save(Category.builder().name("Math").build());
         Category movies = categoryRepository.save(Category.builder().name("Movies").build());
@@ -65,7 +60,6 @@ class CategoryControllerIntegrationTest {
                 .build());
     }
 
-    // Sprawdza liste kategorii z liczbami pytan
     @Test
     @DisplayName("GET /api/categories lista z countami")
     void getAll_returnsCategoryListWithQuestionCounts() throws Exception {
@@ -77,7 +71,6 @@ class CategoryControllerIntegrationTest {
                 .andExpect(jsonPath("$[1].questionCount").value(1));
     }
 
-    // Sprawdza pojedyncza kategorie
     @Test
     @DisplayName("GET /api/categories/{id} pojedyncza kategoria")
     void getById_returnsSingleCategory() throws Exception {
@@ -91,7 +84,6 @@ class CategoryControllerIntegrationTest {
                 .andExpect(jsonPath("$.questionCount").value(2));
     }
 
-    // Sprawdza blad 404 dla nieistniejacej kategorii
     @Test
     @DisplayName("GET /api/categories/{id} 404 gdy brak")
     void getById_notFound() throws Exception {
@@ -99,7 +91,6 @@ class CategoryControllerIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-    // Sprawdza tworzenie nowej kategorii
     @Test
     @DisplayName("POST /api/categories tworzenie")
     void createCategory_success() throws Exception {
@@ -120,7 +111,7 @@ class CategoryControllerIntegrationTest {
         assertThat(categoryRepository.existsByName("Science")).isTrue();
     }
 
-    // Sprawdza duplikat nazwy
+
     @Test
     @DisplayName("POST /api/categories duplikat 400")
     void createCategory_duplicateName() throws Exception {

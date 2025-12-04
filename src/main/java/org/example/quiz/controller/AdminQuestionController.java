@@ -12,16 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.List;
 
-// Kontroler do operacji administracyjnych na pytaniach
 @RestController
 @RequestMapping("/api/admin/questions")
 @RequiredArgsConstructor
 public class AdminQuestionController {
 
-    // Serwis z logika pytan
     private final AdminQuestionService questionService;
 
-    // Tworzy nowe pytanie
     @PostMapping
     public ResponseEntity<?> createQuestion(@Valid @RequestBody QuestionRequest request) {
         QuestionResponse created = questionService.createQuestion(request);
@@ -29,7 +26,6 @@ public class AdminQuestionController {
                 .body(created);
     }
 
-    // Upload wielu pytan z pliku CSV
     @PostMapping("/upload-csv")
     public ResponseEntity<?> uploadCsv(@RequestParam("file") MultipartFile file) {
         try {
@@ -40,7 +36,6 @@ public class AdminQuestionController {
         }
     }
 
-    // Aktualizacja pytania po id
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
@@ -51,14 +46,12 @@ public class AdminQuestionController {
         return ResponseEntity.ok(updated);
     }
 
-    // Usuwanie pytania
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         boolean deleted = questionService.delete(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
-    // Pobranie losowych pytan (podglad)
     @GetMapping("/random")
     public ResponseEntity<List<QuestionResponse>> random(
             @RequestParam(name = "count", required = false, defaultValue = "10") int count
@@ -66,7 +59,6 @@ public class AdminQuestionController {
         return ResponseEntity.ok(questionService.random(count));
     }
 
-    // Lista pytan opcjonalnie filtrowana po kategorii
     @GetMapping
     public ResponseEntity<List<QuestionResponse>> list(
             @RequestParam(name = "categoryId", required = false) Long categoryId

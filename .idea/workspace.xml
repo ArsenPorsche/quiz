@@ -5,18 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e6db932-3fa2-4d6a-a7b4-7d7de5c230f3" name="Changes" comment="quiz category Programming fixed, safe HTML rendering, stable Submit button and fixing Random Quiz category in Global Leaderboard">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quiz/controller/CategoryControllerIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_11_2025,_15_46_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_11_2025__15_46__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/AdminQuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/controller/AdminQuestionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/security/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/security/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/service/AdminQuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/service/AdminQuestionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quiz/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quiz/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/controller/QuizController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/security/JwtUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/service/AuthService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/quiz/service/QuizService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/quiz/service/QuizService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quiz/controller/CategoryControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quiz/controller/CategoryControllerIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/quiz-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/quiz-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2025-11-18T19-37-39_976.dumpstream" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-org.example.quiz.QuizApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/org.example.quiz.QuizApplicationTests.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +46,12 @@
     &quot;assignee&quot;: &quot;ArsenPorsche&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/ArsenPorsche/quiz&quot;,
-    &quot;accountId&quot;: &quot;5e23e168-9f07-471d-879b-f5fe4e610de6&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ArsenPorsche/quiz.git",
+    "accountId": "621239e9-b9bb-4e66-9b58-c577fe20fb25"
   }
-}</component>
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -66,39 +68,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.KeyGenerator.executor": "Run",
-    "Application.QuizApplication.executor": "Run",
-    "JUnit.AdminQuestionControllerTest.executor": "Run",
-    "JUnit.CategoryControllerIntegrationTest.executor": "Run",
-    "JUnit.CategoryControllerTest.executor": "Run",
-    "JUnit.QuizControllerIntegrationTest.executor": "Run",
-    "JUnit.QuizControllerTest.executor": "Run",
-    "Maven.quiz [clean].executor": "Run",
-    "Maven.quiz [install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/zero/PL/s7/javaAdvanced/quiz",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propCompiler",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.KeyGenerator.executor&quot;: &quot;Run&quot;,
+    &quot;Application.QuizApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AdminQuestionControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CategoryControllerIntegrationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CategoryControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.QuizControllerIntegrationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.QuizControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.quiz [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.quiz [install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/zero/PL/s7/javaAdvanced/quiz&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.QuizApplication">
     <configuration name="QuizApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.quiz.QuizApplication" />
@@ -184,18 +186,17 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.QuizApplication" />
+        <item itemvalue="JUnit.AdminQuestionControllerTest" />
         <item itemvalue="JUnit.CategoryControllerIntegrationTest" />
         <item itemvalue="JUnit.QuizControllerIntegrationTest" />
         <item itemvalue="JUnit.QuizControllerTest" />
-        <item itemvalue="JUnit.AdminQuestionControllerTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
