@@ -10,10 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface QuizResultRepository extends JpaRepository<QuizResult, Long> {
 
-    // Wyniki konkretnego gracza (paginowane)
     Page<QuizResult> findByUser(User user, Pageable pageable);
 
-    // Globalny ranking – wszystkie wyniki razem (najlepsze procentowo)
     @Query(value = """
             SELECT 
                 ROW_NUMBER() OVER (ORDER BY R.SCORE_PERCENT DESC, R.FINISHED_AT ASC),
@@ -31,7 +29,6 @@ public interface QuizResultRepository extends JpaRepository<QuizResult, Long> {
             nativeQuery = true)
     Page<Object[]> findGlobalLeaderboardNative(Pageable pageable);
 
-    // Ranking w jednej kategorii (tylko wyniki z wybranej kategorii)
     @Query(value = """
             SELECT 
                 ROW_NUMBER() OVER (ORDER BY R.SCORE_PERCENT DESC, R.FINISHED_AT ASC),

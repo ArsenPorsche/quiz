@@ -28,8 +28,8 @@ public class QuizService {
         int count = questionsCount != null ? questionsCount : 10;
 
         List<Question> questions = categoryId == null
-                ? questionRepository.findRandom(count)// losowy quiz
-                : questionRepository.findRandomByCategoryId(categoryId, count);// z konkretnej kategorii
+                ? questionRepository.findRandom(count)
+                : questionRepository.findRandomByCategoryId(categoryId, count);
 
         return questions.stream()
                 .map(q -> new QuizQuestionDto(
